@@ -1,0 +1,6 @@
+module.exports = {
+  RED_TELL: 'RED_TELL',
+  BLUE_TELL: 'BLUE_TELL',
+  RED_GUESS: 'RED_GUESS',
+  BLUE_GUESS: 'BLUE_GUESS'
+};
