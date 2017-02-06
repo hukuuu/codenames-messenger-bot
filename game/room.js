@@ -14,9 +14,11 @@ class Room {
   }
 
   join(player) {
-    var p = this.findPlayer(player.id)
-    if (!p)
-      this.players.push(player)
+    var p = this.findPlayer(player.id);
+    if (!p) {
+      this.players.push(player);
+      player.position = 'observer';
+    }
   }
 
   leave(player) {
@@ -28,8 +30,8 @@ class Room {
     var takenPositions = this.players.reduce((acc, p) => {
       if (p.position)
         return acc.concat(p.position);
-      }
-    , []);
+      else return acc;
+      }, []);
 
     if (!takenPositions.includes(gamePositions.RED_TELL))
       availablePositions.push(gamePositions.RED_TELL)

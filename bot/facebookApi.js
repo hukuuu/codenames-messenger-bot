@@ -27,6 +27,23 @@ class FacebookApi {
     return this.api.sendTextMessage(senderID, t.WELCOME_TO_ROOM(roomID));
   }
 
+  youAreNotInARoomMessage(senderID) {
+    return this.api.sendTextMessage(senderID, t.YOU_ARE_NOT_IN_A_ROOM());
+  }
+  okMessage(senderID) {
+    return this.api.sendTextMessage(senderID, t.OK());
+  }
+  positionBusyMessage(senderID) {
+    return this.api.sendTextMessage(senderID, t.POSITION_IS_BUSY());
+  }
+  showRoomInfoMessage(senderID, room) {
+    return this.api.sendTextMessage(senderID, t.ROOM_INFO(room));
+  }
+
+  showBoardMessage(senderID, game) {
+    return this.api.sendTextMessage(senderID, t.BOARD(game));
+  }
+
 }
 
 module.exports = FacebookApi;

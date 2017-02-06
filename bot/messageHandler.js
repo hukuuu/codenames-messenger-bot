@@ -34,7 +34,8 @@ class MessageHandler {
 
     if (messageText) {
       var [action,
-        value] = messageText.split(' ');
+        value,
+        value2] = messageText.split(' ');
       // If we receive a text message, check to see if it matches any special
       // keywords and send back the corresponding example. Otherwise, just echo
       // the text we received.
@@ -48,6 +49,14 @@ class MessageHandler {
         case 'join':
           await this.joinRoom(senderID, value);
           break;
+        case 'team':
+          await this.takeSlot(senderID, `${value}_${value2}`.toUpperCase());
+          break;
+        case 'room':
+          await this.showRoomInfo(senderID);
+          break;
+        case 'board':
+          await this.showBoard(senderID);
         case 'name':
           // let name = await this.api.findName(senderID);
           // this.api.sendTextMessage(senderID, name);
@@ -58,14 +67,54 @@ class MessageHandler {
     }
   }
 
+  async showBoard(senderID) {
+    let player = await this.playersManager.findPlayer(senderID);
+    if (!player.roomId && player.roomId != 0) { //TODO ID 0 IS FALSE!!!
+      return this.api.youAreNotInARoomMessage(senderID);
+    }
+    let room = this.roomsManager.findRoom(player.roomId);
+    if (!room) {
+      return this.api.roomDoesNotExistMessage(senderID, player.roomId);
+    }
+    let game = room.game;
+    return this.api.showBoardMessage(senderID, game);
+  }
+
+  async takeSlot(senderID, position) {
+    let player = await this.playersManager.findPlayer(senderID);
+    if (!player.roomId && player.roomId != 0) { //TODO ID 0 IS FALSE!!!
+      return this.api.youAreNotInARoomMessage(senderID);
+    }
+    let room = this.roomsManager.findRoom(player.roomId);
+    if (!room) {
+      return this.api.roomDoesNotExistMessage(senderID, player.roomId);
+    }
+    let ok = room.takePosition(player, position);
+    if (ok)
+      return this.api.okMessage(senderID);
+    return this.api.positionBusyMessage(senderID);
+  }
+
+  async showRoomInfo(senderID) {
+    let player = await this.playersManager.findPlayer(senderID);
+    if (!player.roomId && player.roomId != 0) { //TODO ID 0 IS FALSE!!!
+      return this.api.youAreNotInARoomMessage(senderID);
+    }
+    let room = this.roomsManager.findRoom(player.roomId);
+    if (!room) {
+      return this.api.roomDoesNotExistMessage(senderID, player.roomId);
+    }
+    return this.api.showRoomInfoMessage(senderID, room);
+  }
+
   createRoom(senderID) {
     let room = this.roomsManager.createRoom();
-    this.api.roomCreatedMessage(senderID, room.id);
+    return this.api.roomCreatedMessage(senderID, room.id);
   }
 
   listRooms(senderID) {
     let roomIds = this.roomsManager.listRooms();
-    this.api.listRoomsMessage(senderID, roomIds);
+    return this.api.listRoomsMessage(senderID, roomIds);
   }
 
   async joinRoom(senderID, roomID) {
@@ -75,6 +124,8 @@ class MessageHandler {
     } else {
       let player = await this.playersManager.findPlayer(senderID);
       room.join(player);
+      player.roomId = room.id;
+      console.log(player);
       return this.api.welcomeToRoomMessage(senderID, roomID);
     }
   }

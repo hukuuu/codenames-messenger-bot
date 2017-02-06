@@ -7,11 +7,13 @@ class PlayersManager {
   }
 
   async findPlayer(id) {
-    let player = this.players.filter(p => p.id == id)[0]
+    let player = this.players.filter(p => p.id == id)[0];
     if(!player) {
       let name = await this.api.findName(id);
       player = new Player(id, name);
+      this.players.push(player);
     }
+    console.log(player);
     return player;
   }
 }
