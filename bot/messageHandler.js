@@ -1,6 +1,7 @@
 var FacebookApi = require('./facebookApi');
 var RoomsManager = require('../game/roomsManager');
 var PlayersManager = require('../game/playersManager');
+var gp = require('../game/gamePositions');
 
 class MessageHandler {
 
@@ -35,7 +36,7 @@ class MessageHandler {
     if (messageText) {
       var [action,
         value,
-        value2] = messageText.split(' ');
+        value2] = messageText.toLowerCase().split(' ');
       // If we receive a text message, check to see if it matches any special
       // keywords and send back the corresponding example. Otherwise, just echo
       // the text we received.
@@ -57,14 +58,67 @@ class MessageHandler {
           break;
         case 'board':
           await this.showBoard(senderID);
-        case 'name':
-          // let name = await this.api.findName(senderID);
-          // this.api.sendTextMessage(senderID, name);
           break;
+        case 'log':
+          await this.log(senderID);
+          break;
+        case 'hint':
+          let [hint, count] = [value, value2];
+          await this.hint(senderID, hint, count);
+          break;
+        case 'guess':
+          let word = value;
+          await this.guess(senderID, word);
         default:
           // this.api.sendTextMessage(senderID, messageText);
       }
     }
+  }
+
+  async log(senderID) {
+    let player = await this.playersManager.findPlayer(senderID);
+    if (!player.roomId && player.roomId != 0) { //TODO ID 0 IS FALSE!!!
+      return this.api.youAreNotInARoomMessage(senderID);
+    }
+    let room = this.roomsManager.findRoom(player.roomId);
+    if (!room) {
+      return this.api.roomDoesNotExistMessage(senderID, player.roomId);
+    }
+    console.log(room.game.log);
+    return this.api.logGameStateMessage(senderID, room.game.log);
+  }
+
+  async hint(senderID, word, count) {
+      let hint = {value: word, count: count};
+      await this.play(senderID, 'Tell', hint, this.api.playerHintedMessage.bind(this.api));
+  }
+
+  async guess(senderID, word) {
+      await this.play(senderID, 'Guess', word, this.api.playerGuessedMessage.bind(this.api));
+  }
+
+  async play(senderID, action, args, messageMethod) {
+
+    let player = await this.playersManager.findPlayer(senderID);
+    if (!player.roomId && player.roomId != 0) { //TODO ID 0 IS FALSE!!!
+      return this.api.youAreNotInARoomMessage(senderID);
+    }
+    let room = this.roomsManager.findRoom(player.roomId);
+    if (!room) {
+      return this.api.roomDoesNotExistMessage(senderID, player.roomId);
+    }
+
+    if(player.position) {
+      let prefix = player.position.substring(0, player.position.indexOf('_')).toLowerCase();
+      room.game[prefix + action](args);
+    }
+    return this.broadcast(room.players, args, messageMethod);
+  }
+
+  broadcast(players, hint, f) {
+    return Promise.all(players.map( p => {
+      return f(p.id, p.name, hint);
+    }));
   }
 
   async showBoard(senderID) {

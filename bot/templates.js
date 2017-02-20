@@ -44,5 +44,22 @@ module.exports = {
 ***RED***\n${red.join(', ')}
 
 ***BLUE***\n${blue.join(', ')}`;
-  }
+  },
+
+  PLAYER_HINTED: (name, hint) => `***HINT***\n${name}: ${hint.value} - ${hint.count}`,
+
+  LOG: log => {
+    let head = `***LOG***\n`;
+
+    let body = log.map(logItem => {
+      let name = logItem.player.name;
+      let card = logItem.card;
+      let hint = logItem.hint;
+      return `${name} ${logItem.action} ${card? card.text: ''} ${hint? hint.value + ' ' + hint.count : ''}`
+    })
+
+    return head + body;
+  },
+
+  PLAYER_GUESSED: (name, card) => `***GUESS***\n${name}: ${card.text} - ${card.type}`,
 };

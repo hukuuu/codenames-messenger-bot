@@ -44,6 +44,17 @@ class FacebookApi {
     return this.api.sendTextMessage(senderID, t.BOARD(game));
   }
 
+  playerHintedMessage(senderID, name, hint) {
+    return this.api.sendTextMessage(senderID, t.PLAYER_HINTED(name, hint));
+  }
+  playerGuessedMessage(senderID, name, card) {
+    return this.api.sendTextMessage(senderID, t.PLAYER_GUESSED(name, card));
+  }
+
+  logGameStateMessage(senderID, log) {
+    return this.api.sendTextMessage(senderID, t.LOG(log));
+  }
+
 }
 
 module.exports = FacebookApi;

@@ -5,6 +5,8 @@ const blue = 'blue'
 const assassin = 'assassin'
 const neutral = 'neutral'
 
+const gp = require('./gamePositions');
+
 class Game {
 
   constructor(cards) {
@@ -41,54 +43,54 @@ class Game {
   }
 
   redTell(player, hint) {
-    if (this._validateGameTurn('red-tell') && this._validatePlayerTurn(player)) {
+    if (this._validateGameTurn(gp.RED_TELL) && this._validatePlayerPosition(player)) {
       this.redHint = hint
       this.redHint.left = this._getCountValue(hint.count)
       this._logTell(player, hint)
-      this.turn = 'red-guess'
+      this.turn = gp.RED_GUESS
     }
   }
 
   blueTell(player, hint) {
-    if (this._validateGameTurn('blue-tell') && this._validatePlayerTurn(player)) {
+    if (this._validateGameTurn(gp.BLUE_TELL) && this._validatePlayerPosition(player)) {
       this.blueHint = hint
       this.blueHint.left = this._getCountValue(hint.count)
       this._logTell(player, hint)
-      this.turn = 'blue-guess'
+      this.turn = gp.BLUE_GUESS
     }
   }
 
-  redGuess(player, pos) {
-    if (this._validateGameTurn('red-guess') && this._validatePlayerTurn(player)) {
-      this._revealCard(pos)
-      this._logGuess(player, this._findCard(pos))
+  redGuess(player, word) {
+    if (this._validateGameTurn(gp.RED_GUESS) && this._validatePlayerPosition(player)) {
+      this._revealCard(word)
+      this._logGuess(player, this._findCard(word))
       this._computeWinner()
 
       this.redHint.left--;
-      if (this._findCard(pos).type !== 'red' || this.redHint.left === 0)
-        this.turn = 'blue-tell'
+      if (this._findCard(word).type !== 'red' || this.redHint.left === 0)
+        this.turn = gp.BLUE_TELL
     }
   }
 
-  blueGuess(player, pos) {
-    if (this._validateGameTurn('blue-guess') && this._validatePlayerTurn(player)) {
-      this._revealCard(pos)
-      this._logGuess(player, this._findCard(pos))
+  blueGuess(player, word) {
+    if (this._validateGameTurn(gp.BLUE_GUESS) && this._validatePlayerPosition(player)) {
+      this._revealCard(word)
+      this._logGuess(player, this._findCard(word))
       this._computeWinner()
 
       this.blueHint.left--;
-      if (this._findCard(pos).type !== 'blue' || this.blueHint.left === 0)
-        this.turn = 'red-tell'
+      if (this._findCard(word).type !== 'blue' || this.blueHint.left === 0)
+        this.turn = gp.RED_TELL
     }
   }
 
   pass(player) {
-    if (this._validateGameTurn('blue-guess', 'red-guess') && this._validatePlayerTurn(player)) {
+    if (this._validateGameTurn(gp.BLUE_GUESS, gp.RED_GUESS) && this._validatePlayerPosition(player)) {
       this._logPass(player)
-      if (this.turn === 'blue-guess')
-        this.turn = 'red-tell'
-      if (this.turn === 'red-guess')
-        this.turn = 'blue-tell'
+      if (this.turn === gp.BLUE_GUESS)
+        this.turn = gp.RED_TELL
+      if (this.turn === gp.RED_GUESS)
+        this.turn = gp.BLUE_TELL
     }
   }
 
@@ -104,8 +106,10 @@ class Game {
     }
   }
 
-  _validatePlayerTurn(player) {
-    return player.slot === this.turn
+  _validatePlayerPosition(player) {
+    let result = player.position === this.turn
+    console.log('player position: ', result);
+    return result;
     // if (player.slot !== this.turn)
     // throw new Error(`Not your turn, ${player.name}...`)
   }
@@ -119,6 +123,7 @@ class Game {
       if (turn == action)
         safe = true
     })
+    console.log('game turn: ', safe);
     return safe
     // if (!safe) {
     // throw new Error(`Invalid state: game turn is ${this.turn}`)
@@ -140,7 +145,7 @@ class Game {
     let assassins = 0
 
     revealed.forEach(c => {
-      if (c.type === assassin) 
+      if (c.type === assassin)
         assassins++;
       if (c.type === red)
         reds++;
@@ -150,7 +155,7 @@ class Game {
     )
 
     if (assassins === 1) {
-      this.winner = this.turn === 'blue-guess'
+      this.winner = this.turn === gp.BLUE_GUESS
         ? 'red'
         : 'blue'
       return
@@ -180,8 +185,8 @@ class Game {
 
   }
 
-  _revealCard(pos) {
-    const card = this._findCard(pos)
+  _revealCard(word) {
+    const card = this._findCard(word)
     if (!!card.revealed) {
       throw new Error('illegal state: card already revealed pos[' + pos + ']')
     } else {
@@ -190,16 +195,16 @@ class Game {
 
   }
 
-  _findCard(pos) {
-    return this.cards.filter(card => card.pos === pos)[0]
+  _findCard(word) {
+    return this.cards.filter(card => card.text.toLowerCase() === word.toLowerCase())[0];
   }
 
   _computeInitialState(cards) {
     const redCards = cards.filter(card => card.type === red).length
     if (redCards === 9)
-      return {turn: 'red-tell', first: 'red'}
+      return {turn: gp.RED_TELL, first: 'red'}
     else
-      return {turn: 'blue-tell', first: 'blue'}
+      return {turn: gp.BLUE_TELL, first: 'blue'}
     }
 
   _logPass(player) {
