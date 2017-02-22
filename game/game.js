@@ -44,6 +44,7 @@ class Game {
 
   redTell(player, hint) {
     if (this._validateGameTurn(gp.RED_TELL) && this._validatePlayerPosition(player)) {
+      console.log('?');
       this.redHint = hint
       this.redHint.left = this._getCountValue(hint.count)
       this._logTell(player, hint)
@@ -108,6 +109,7 @@ class Game {
 
   _validatePlayerPosition(player) {
     let result = player.position === this.turn
+    console.log(player.position, this.turn);
     console.log('player position: ', result);
     return result;
     // if (player.slot !== this.turn)

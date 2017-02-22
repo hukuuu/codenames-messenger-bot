@@ -110,7 +110,7 @@ class MessageHandler {
 
     if(player.position) {
       let prefix = player.position.substring(0, player.position.indexOf('_')).toLowerCase();
-      room.game[prefix + action](args);
+      room.game[prefix + action](player, args);
     }
     return this.broadcast(room.players, args, messageMethod);
   }

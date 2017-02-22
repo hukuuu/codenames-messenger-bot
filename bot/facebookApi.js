@@ -47,8 +47,8 @@ class FacebookApi {
   playerHintedMessage(senderID, name, hint) {
     return this.api.sendTextMessage(senderID, t.PLAYER_HINTED(name, hint));
   }
-  playerGuessedMessage(senderID, name, card) {
-    return this.api.sendTextMessage(senderID, t.PLAYER_GUESSED(name, card));
+  playerGuessedMessage(senderID, name, word) {
+    return this.api.sendTextMessage(senderID, t.PLAYER_GUESSED(name, word));
   }
 
   logGameStateMessage(senderID, log) {
