@@ -127,7 +127,6 @@ class MessageHandler {
 
   broadcast(players, f, args) {
     return Promise.all(players.map( p => {
-      console.log([p.id].concat(args));
       return f.apply(null, [p.id].concat(args));
     }));
   }
