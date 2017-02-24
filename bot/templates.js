@@ -47,10 +47,10 @@ module.exports = {
       let name = logItem.player.name;
       let card = logItem.card;
       let hint = logItem.hint;
-      return `${name} ${logItem.action} ${card? card.text: ''} ${hint? hint.value + ' ' + hint.count : ''}\n`
+      return `${name} ${logItem.action} ${card? card.text: ''} ${hint? hint.value + ' ' + hint.count : ''}`
     })
 
-    return head + body;
+    return head + body.join('\n');
   },
 
   PLAYER_GUESSED: (name, word) => `***GUESS***\n${name}: ${word}`,
