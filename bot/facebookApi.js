@@ -40,8 +40,11 @@ class FacebookApi {
     return this.api.sendTextMessage(senderID, t.ROOM_INFO(room));
   }
 
-  showBoardMessage(senderID, game) {
-    return this.api.sendTextMessage(senderID, t.BOARD(game));
+  showBoardHintMessage(senderID, cards) {
+    return this.api.sendTextMessage(senderID, t.BOARD_HINT(cards));
+  }
+  showBoardGuessMessage(senderID, cards) {
+    return this.api.sendTextMessage(senderID, t.BOARD_GUESS(cards));
   }
 
   playerHintedMessage(senderID, name, hint) {

@@ -21,30 +21,22 @@ module.exports = {
     return `Room ${room.id}\n${playersInfo}`
   },
 
-  BOARD: game => {
-    let assassin;
-    let neutral = [];
-    let red = [];
-    let blue = [];
-    game.cards.forEach(card => {
-      if (card.type === 'assassin')
-        assassin = card.text;
-      if (card.type === 'neutral')
-        neutral.push(card.text);
-      if (card.type === 'red')
-        red.push(card.text);
-      if (card.type === 'blue')
-        blue.push(card.text);
-      }
-    );
-    return `***ASSASSIN***\n${assassin}
+  BOARD_HINT: cards => {
+    const t = {};
+    cards.filter(c => !c.revealed).forEach(c => {
+      t[c.type] = t[c.type]
+        ? t[c.type].concat(c.text)
+        : [c.text];
+    })
+    return `***ASSASSIN***\n${t.assassin.join('')}
 
-***NEUTRAL***\n${neutral.join(', ')}
+***NEUTRAL***\n${t.neutral.join(', ')}
 
-***RED***\n${red.join(', ')}
+***RED***\n${t.red.join(', ')}
 
-***BLUE***\n${blue.join(', ')}`;
+***BLUE***\n${t.blue.join(', ')}`;
   },
+  BOARD_GUESS: cards => `***BOARD***\n${cards.filter(c => !c.revealed).map(c => c.text).join(', ')}`,
 
   PLAYER_HINTED: (name, hint) => `***HINT***\n${name}: ${hint.value} - ${hint.count}`,
 

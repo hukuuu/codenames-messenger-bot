@@ -130,8 +130,12 @@ class MessageHandler {
     if (!room) {
       return this.api.roomDoesNotExistMessage(senderID, player.roomId);
     }
-    let game = room.game;
-    return this.api.showBoardMessage(senderID, game);
+    if(player.isHinter()) {
+      return this.api.showBoardHintMessage(senderID, room.game.cards);
+    }
+    else {
+      return this.api.showBoardGuessMessage(senderID, room.game.cards);
+    }
   }
 
   async takeSlot(senderID, position) {
