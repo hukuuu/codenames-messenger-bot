@@ -218,7 +218,7 @@ class MessageHandler {
       room.join(player);
       player.roomId = room.id;
       console.log(player);
-      return this.api.welcomeToRoomMessage(senderID, roomID);
+      return this.api.welcomeToRoomMessage(senderID, room);
     }
   }
 }

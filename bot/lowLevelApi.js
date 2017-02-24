@@ -130,7 +130,7 @@ class LowLevelApi {
       }
     };
 
-    this.callSendAPI(messageData);
+    return this.callSendAPI(messageData);
   }
 
   /*

@@ -23,8 +23,10 @@ class FacebookApi {
     return this.api.sendTextMessage(senderID, t.ROOM_DOES_NOT_EXIST(roomID));
   }
 
-  welcomeToRoomMessage(senderID, roomID) {
-    return this.api.sendTextMessage(senderID, t.WELCOME_TO_ROOM(roomID));
+  async welcomeToRoomMessage(senderID, room) {
+    await this.api.sendTextMessage(senderID, t.WELCOME_TO_ROOM(room.id));
+    await this.api.sendTextMessage(senderID, t.ROOM_INFO(room));
+    return this.api.sendTextMessage(senderID, t.TEAM_HELP);
   }
 
   youAreNotInARoomMessage(senderID) {
