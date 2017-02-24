@@ -54,4 +54,5 @@ module.exports = {
   },
 
   PLAYER_GUESSED: (name, word) => `***GUESS***\n${name}: ${word}`,
+  PLAYER_PASSED: name => `***PASS***\n${name} passed.`
 };

@@ -69,6 +69,10 @@ class MessageHandler {
         case 'guess':
           let word = value;
           await this.guess(senderID, word);
+          break;
+        case 'pass':
+          await this.pass(senderID);
+          break;
         default:
           // this.api.sendTextMessage(senderID, messageText);
       }
@@ -88,6 +92,10 @@ class MessageHandler {
     return this.api.logGameStateMessage(senderID, room.game.log);
   }
 
+  async pass(senderID) {
+    return this.play(senderID, 'pass', null, this.api.playerPassedMessage.bind(this.api));
+  }
+
   async hint(senderID, word, count) {
       let hint = {value: word, count: count};
       await this.play(senderID, 'Tell', hint, this.api.playerHintedMessage.bind(this.api));
@@ -97,7 +105,7 @@ class MessageHandler {
       await this.play(senderID, 'Guess', word, this.api.playerGuessedMessage.bind(this.api));
   }
 
-  async play(senderID, action, args, messageMethod) {
+  async play(senderID, action, value, messageMethod) {
 
     let player = await this.playersManager.findPlayer(senderID);
     if (!player.roomId && player.roomId != 0) { //TODO ID 0 IS FALSE!!!
@@ -108,16 +116,19 @@ class MessageHandler {
       return this.api.roomDoesNotExistMessage(senderID, player.roomId);
     }
 
-    if(player.position) {
+    if(action === 'pass') {
+      room.game.pass(player);
+    } else if(player.position) {
       let prefix = player.position.substring(0, player.position.indexOf('_')).toLowerCase();
-      room.game[prefix + action](player, args);
+      room.game[prefix + action](player, value);
     }
-    return this.broadcast(room.players, args, messageMethod);
+    return this.broadcast(room.players, messageMethod, [player.name, value]);
   }
 
-  broadcast(players, hint, f) {
+  broadcast(players, f, args) {
     return Promise.all(players.map( p => {
-      return f(p.id, p.name, hint);
+      console.log([p.id].concat(args));
+      return f.apply(null, [p.id].concat(args));
     }));
   }
 

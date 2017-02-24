@@ -54,6 +54,10 @@ class FacebookApi {
     return this.api.sendTextMessage(senderID, t.PLAYER_GUESSED(name, word));
   }
 
+  playerPassedMessage(senderID, name) {
+    return this.api.sendTextMessage(senderID, t.PLAYER_PASSED(name));
+  }
+
   logGameStateMessage(senderID, log) {
     return this.api.sendTextMessage(senderID, t.LOG(log));
   }
