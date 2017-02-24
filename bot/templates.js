@@ -54,5 +54,18 @@ module.exports = {
   },
 
   PLAYER_GUESSED: (name, word) => `***GUESS***\n${name}: ${word}`,
-  PLAYER_PASSED: name => `***PASS***\n${name} passed.`
+  PLAYER_PASSED: name => `***PASS***\n${name} passed.`,
+
+  CREATE_HELP: `create - create a new room.`,
+  LIST_HELP: `list - list all available rooms.`,
+  JOIN_HELP: `join <id> - join particular room.`,
+  TEAM_HELP: `team <red/blue> <tell/guess> - take a team ( red or blue ) and a position ( tell or guess ).`,
+  ROOM_HELP: `room - display room info.`,
+  BOARD_HELP: `board - display the board.`,
+  LOG_HELP: `log - display the game log.`,
+  HINT_HELP: `hint <word> <number> - hint.`,
+  GUESS_HELP: `guess <word> - guess.`,
+  PASS_HELP: `pass - pass`,
+  HELP_HELP: `help - show this help.`
+
 };

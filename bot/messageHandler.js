@@ -73,15 +73,39 @@ class MessageHandler {
         case 'pass':
           await this.pass(senderID);
           break;
+        case 'help':
+          await this.help(senderID);
+          break;
         default:
           // this.api.sendTextMessage(senderID, messageText);
       }
     }
   }
 
+  async help(senderID) {
+    let player = await this.playersManager.findPlayer(senderID);
+
+    if(!player.isInRoom()) {
+      return this.api.helpNotInRoomMessage(senderID);
+    }
+
+    if(player.isObserver()) {
+      return this.api.helpObserverMessage(senderID);
+    }
+
+    if(player.isHinter()) {
+      return this.api.helpTellMessage(senderID);
+    }
+
+    if(!player.isHinter()) {
+      return this.api.helpGuessMessage(senderID);
+    }
+
+  }
+
   async log(senderID) {
     let player = await this.playersManager.findPlayer(senderID);
-    if (!player.roomId && player.roomId != 0) { //TODO ID 0 IS FALSE!!!
+    if (!player.isInRoom()) {
       return this.api.youAreNotInARoomMessage(senderID);
     }
     let room = this.roomsManager.findRoom(player.roomId);
@@ -108,7 +132,7 @@ class MessageHandler {
   async play(senderID, action, value, messageMethod) {
 
     let player = await this.playersManager.findPlayer(senderID);
-    if (!player.roomId && player.roomId != 0) { //TODO ID 0 IS FALSE!!!
+    if (!playser.isInRoom()) {
       return this.api.youAreNotInARoomMessage(senderID);
     }
     let room = this.roomsManager.findRoom(player.roomId);
@@ -133,7 +157,7 @@ class MessageHandler {
 
   async showBoard(senderID) {
     let player = await this.playersManager.findPlayer(senderID);
-    if (!player.roomId && player.roomId != 0) { //TODO ID 0 IS FALSE!!!
+    if (!player.isInRoom()) {
       return this.api.youAreNotInARoomMessage(senderID);
     }
     let room = this.roomsManager.findRoom(player.roomId);
@@ -150,7 +174,7 @@ class MessageHandler {
 
   async takeSlot(senderID, position) {
     let player = await this.playersManager.findPlayer(senderID);
-    if (!player.roomId && player.roomId != 0) { //TODO ID 0 IS FALSE!!!
+    if (!player.isInRoom()) {
       return this.api.youAreNotInARoomMessage(senderID);
     }
     let room = this.roomsManager.findRoom(player.roomId);
@@ -165,7 +189,7 @@ class MessageHandler {
 
   async showRoomInfo(senderID) {
     let player = await this.playersManager.findPlayer(senderID);
-    if (!player.roomId && player.roomId != 0) { //TODO ID 0 IS FALSE!!!
+    if (!player.isInRoom()) {
       return this.api.youAreNotInARoomMessage(senderID);
     }
     let room = this.roomsManager.findRoom(player.roomId);

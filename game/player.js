@@ -9,6 +9,15 @@ class Player {
   isHinter() {
     return this.position && this.position.toLowerCase().indexOf('tell') > -1;
   }
+
+  isObserver() {
+    return this.position && this.position.toLowerCase().indexOf('observer') > -1;
+  }
+
+  isInRoom() {
+    return this.roomId || this.roomId === 0;
+  }
+
 }
 
 module.exports = Player;

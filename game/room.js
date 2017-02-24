@@ -1,6 +1,6 @@
 var generate = require('./cardsGenerator');
 var Game = require('./game');
-var gamePositions = require('./gamePositions');
+var gp = require('./gamePositions');
 
 class Room {
   constructor(id) {
@@ -17,7 +17,7 @@ class Room {
     var p = this.findPlayer(player.id);
     if (!p) {
       this.players.push(player);
-      player.position = 'observer';
+      player.position = gp.OBSERVER;
     }
   }
 
@@ -33,14 +33,14 @@ class Room {
       else return acc;
       }, []);
 
-    if (!takenPositions.includes(gamePositions.RED_TELL))
-      availablePositions.push(gamePositions.RED_TELL)
-    if (!takenPositions.includes(gamePositions.BLUE_TELL))
-      availablePositions.push(gamePositions.BLUE_TELL)
-    if (!takenPositions.includes(gamePositions.RED_GUESS))
-      availablePositions.push(gamePositions.RED_GUESS)
-    if (!takenPositions.includes(gamePositions.BLUE_GUESS))
-      availablePositions.push(gamePositions.BLUE_GUESS)
+    if (!takenPositions.includes(gp.RED_TELL))
+      availablePositions.push(gp.RED_TELL)
+    if (!takenPositions.includes(gp.BLUE_TELL))
+      availablePositions.push(gp.BLUE_TELL)
+    if (!takenPositions.includes(gp.RED_GUESS))
+      availablePositions.push(gp.RED_GUESS)
+    if (!takenPositions.includes(gp.BLUE_GUESS))
+      availablePositions.push(gp.BLUE_GUESS)
 
     return availablePositions;
   }

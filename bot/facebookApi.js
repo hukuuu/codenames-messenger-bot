@@ -62,6 +62,26 @@ class FacebookApi {
     return this.api.sendTextMessage(senderID, t.LOG(log));
   }
 
+  helpNotInRoomMessage(senderID) {
+    let composite = [t.LIST_HELP, t.CREATE_HELP, t.JOIN_HELP, t.HELP_HELP].join('\n');
+    return this.api.sendTextMessage(senderID, composite);
+  }
+
+  helpTellMessage(senderID) {
+    let composite = [t.ROOM_HELP, t.BOARD_HELP, t.LOG_HELP, t.HINT_HELP, t.HELP_HELP].join('\n');
+    return this.api.sendTextMessage(senderID, composite);
+  }
+
+  helpGuessMessage(senderID) {
+    let composite = [t.ROOM_HELP, t.BOARD_HELP, t.LOG_HELP, t.GUESS_HELP, t.PASS_HELP, t.HELP_HELP].join('\n');
+    return this.api.sendTextMessage(senderID, composite);
+  }
+
+  helpObserverMessage(senderID) {
+    let composite = [t.TEAM_HELP, t.BOARD_HELP, t.LOG_HELP, t.HELP_HELP].join('\n');
+    return this.api.sendTextMessage(senderID, composite);
+  }
+
 }
 
 module.exports = FacebookApi;
