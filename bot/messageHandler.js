@@ -132,7 +132,7 @@ class MessageHandler {
   async play(senderID, action, value, messageMethod) {
 
     let player = await this.playersManager.findPlayer(senderID);
-    if (!playser.isInRoom()) {
+    if (!player.isInRoom()) {
       return this.api.youAreNotInARoomMessage(senderID);
     }
     let room = this.roomsManager.findRoom(player.roomId);
@@ -145,6 +145,13 @@ class MessageHandler {
     } else if(player.position) {
       let prefix = player.position.substring(0, player.position.indexOf('_')).toLowerCase();
       room.game[prefix + action](player, value);
+      if(action === 'Guess') {
+        var card = room.game._findCard(value);
+        var suf = card.type.toLowerCase() === prefix
+          ? '\u2714'
+          : '\u2718';
+        value = `${value} ${suf}`;
+      }
     }
     return this.broadcast(room.players, messageMethod, [player.name, value]);
   }

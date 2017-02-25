@@ -44,10 +44,21 @@ module.exports = {
     let head = `***LOG***\n`;
 
     let body = log.map(logItem => {
-      let name = logItem.player.name;
-      let card = logItem.card;
-      let hint = logItem.hint;
-      return `${name} ${logItem.action} ${card? card.text: ''} ${hint? hint.value + ' ' + hint.count : ''}`
+      let name = logItem.player.getNiceName();
+      let card = '';
+      if (logItem.card)
+        card = logItem.card.text + ' ' + (logItem.success
+          ? '\u2714'
+          : '\u2718');
+      let hint = logItem.hint
+        ? logItem.hint.value + ' ' + logItem.hint.count
+        : '';
+
+      let action = logItem.action === 'pass'
+        ? '\u2714'
+        : '\u2794';
+
+      return `${name} ${action} ${card} ${hint}`
     })
 
     return head + body.join('\n');

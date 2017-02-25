@@ -6,6 +6,10 @@ class Player {
     this.position = position;
   }
 
+  getNiceName() {
+    return this.name.substring(0, 5);
+  }
+
   isHinter() {
     return this.position && this.position.toLowerCase().indexOf('tell') > -1;
   }

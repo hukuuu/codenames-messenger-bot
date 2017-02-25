@@ -44,7 +44,6 @@ class Game {
 
   redTell(player, hint) {
     if (this._validateGameTurn(gp.RED_TELL) && this._validatePlayerPosition(player)) {
-      console.log('?');
       this.redHint = hint
       this.redHint.left = this._getCountValue(hint.count)
       this._logTell(player, hint)
@@ -213,7 +212,8 @@ class Game {
     this.log.push({action: 'pass', timestamp: Date.now(), player: player})
   }
   _logGuess(player, card) {
-    this.log.push({action: 'guess', timestamp: Date.now(), player: player, card: card})
+    var success = player.position.toLowerCase().indexOf(card.type) > -1;
+    this.log.push({action: 'guess', timestamp: Date.now(), player: player, card: card, success: success})
   }
   _logTell(player, hint) {
     this.log.push({action: 'hint', timestamp: Date.now(), player: player, hint: hint})

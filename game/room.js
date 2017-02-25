@@ -10,7 +10,7 @@ class Room {
   }
 
   findPlayer(id) {
-    return this.players.filter(player => player.id == id)[0]
+    return this.players.filter(player => player.id == id)[0];
   }
 
   join(player) {
@@ -22,7 +22,7 @@ class Room {
   }
 
   leave(player) {
-    this.players = this.players.filter(p => p.id !== player.id)
+    this.players = this.players.filter(p => p.id !== player.id);
   }
 
   findAvailablePositions() {
