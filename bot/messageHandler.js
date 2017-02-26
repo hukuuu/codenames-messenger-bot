@@ -82,7 +82,8 @@ class MessageHandler {
           await this.setNickName(senderID, nickName);
           break;
         default:
-          // this.api.sendTextMessage(senderID, messageText);
+          await this.api.unknownCommandMessage(senderID, action);
+          break;
       }
     }
   }

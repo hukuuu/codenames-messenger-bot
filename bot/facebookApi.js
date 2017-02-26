@@ -11,6 +11,10 @@ class FacebookApi {
     return this.api.findName(id);
   }
 
+  unknownCommandMessage(senderID, command) {
+    return this.api.sendTextMessage(senderID, t.UNKNOWN_COMMAND(command));
+  }
+
   roomCreatedMessage(senderID, roomID) {
     return this.api.sendTextMessage(senderID, t.ROOM_CREATED(roomID));
   }

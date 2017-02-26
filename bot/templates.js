@@ -70,6 +70,8 @@ module.exports = {
   PLAYER_JOINED: name => `${name} joined the room`,
   PLAYER_TOOK_SLOT: (name, slot) => `${name} took ${slot}`,
 
+  UNKNOWN_COMMAND: command => `Unknown command: ${command}`,
+
 
   WELCOME: `***WELCOME***`,
   ROOM_IS_READY: `Ok, all set up, lets start the game.`,
