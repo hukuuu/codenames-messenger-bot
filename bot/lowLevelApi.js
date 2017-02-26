@@ -119,7 +119,7 @@ class LowLevelApi {
  * Send a text message using the Send API.
  *
  */
-  sendTextMessage(recipientId, messageText) {
+  async sendTextMessage(recipientId, messageText) {
     var messageData = {
       recipient: {
         id: recipientId
@@ -129,6 +129,16 @@ class LowLevelApi {
         metadata: "DEVELOPER_DEFINED_METADATA"
       }
     };
+
+
+    const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+    const ms = 1500 + messageText.length * 3;
+
+    await this.sendTypingOn(recipientId);
+    console.log('delay', ms, 'ms');
+    await sleep(ms);
+    await this.sendTypingOff(recipientId);
 
     return this.callSendAPI(messageData);
   }
