@@ -22,6 +22,7 @@ class Game {
     this.redHint = {
       left: 0
     }
+    this.turnChanged = false;
   }
 
   getTellState() {
@@ -48,6 +49,7 @@ class Game {
       this.redHint.left = this._getCountValue(hint.count)
       this._logTell(player, hint)
       this.turn = gp.RED_GUESS
+      this.turnChanged = true;
     }
   }
 
@@ -57,6 +59,7 @@ class Game {
       this.blueHint.left = this._getCountValue(hint.count)
       this._logTell(player, hint)
       this.turn = gp.BLUE_GUESS
+      this.turnChanged = true;
     }
   }
 
@@ -67,8 +70,12 @@ class Game {
       this._computeWinner()
 
       this.redHint.left--;
-      if (this._findCard(word).type !== 'red' || this.redHint.left === 0)
+      if (this._findCard(word).type !== 'red' || this.redHint.left === 0) {
         this.turn = gp.BLUE_TELL
+        this.turnChanged = true;
+      } else {
+        this.turnChanged = false;
+      }
     }
   }
 
@@ -79,8 +86,13 @@ class Game {
       this._computeWinner()
 
       this.blueHint.left--;
-      if (this._findCard(word).type !== 'blue' || this.blueHint.left === 0)
+      if (this._findCard(word).type !== 'blue' || this.blueHint.left === 0) {
         this.turn = gp.RED_TELL
+        this.turnChanged = true;
+      } else {
+        this.turnChanged = false;
+      }
+
     }
   }
 
@@ -91,7 +103,13 @@ class Game {
         this.turn = gp.RED_TELL
       if (this.turn === gp.RED_GUESS)
         this.turn = gp.BLUE_TELL
+
+      this.turnChanged = true;
     }
+  }
+
+  isTurnChanged() {
+    return this.turnChanged;
   }
 
   _getState() {

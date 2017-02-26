@@ -67,6 +67,8 @@ module.exports = {
   PLAYER_GUESSED: (name, word) => `***GUESS***\n${name}: ${word}`,
   PLAYER_PASSED: name => `***PASS***\n${name} passed.`,
 
+  TURN_CHANGED: name => `${name}'s turn.`,
+
   CREATE_HELP: `create - create a new room.`,
   LIST_HELP: `list - list all available rooms.`,
   JOIN_HELP: `join <id> - join particular room.`,

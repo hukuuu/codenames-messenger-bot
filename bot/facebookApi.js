@@ -84,6 +84,10 @@ class FacebookApi {
     return this.api.sendTextMessage(senderID, composite);
   }
 
+  turnChangedMessage(senderID, playerInTurn) {
+    return this.api.sendTextMessage(senderID, t.TURN_CHANGED(playerInTurn.getNiceName()));
+  }
+
 }
 
 module.exports = FacebookApi;

@@ -63,7 +63,8 @@ class MessageHandler {
           await this.log(senderID);
           break;
         case 'hint':
-          let [hint, count] = [value, value2];
+          let [hint,
+            count] = [value, value2];
           await this.hint(senderID, hint, count);
           break;
         case 'guess':
@@ -85,19 +86,19 @@ class MessageHandler {
   async help(senderID) {
     let player = await this.playersManager.findPlayer(senderID);
 
-    if(!player.isInRoom()) {
+    if (!player.isInRoom()) {
       return this.api.helpNotInRoomMessage(senderID);
     }
 
-    if(player.isObserver()) {
+    if (player.isObserver()) {
       return this.api.helpObserverMessage(senderID);
     }
 
-    if(player.isHinter()) {
+    if (player.isHinter()) {
       return this.api.helpTellMessage(senderID);
     }
 
-    if(!player.isHinter()) {
+    if (!player.isHinter()) {
       return this.api.helpGuessMessage(senderID);
     }
 
@@ -121,12 +122,15 @@ class MessageHandler {
   }
 
   async hint(senderID, word, count) {
-      let hint = {value: word, count: count};
-      await this.play(senderID, 'Tell', hint, this.api.playerHintedMessage.bind(this.api));
+    let hint = {
+      value: word,
+      count: count
+    };
+    await this.play(senderID, 'Tell', hint, this.api.playerHintedMessage.bind(this.api));
   }
 
   async guess(senderID, word) {
-      await this.play(senderID, 'Guess', word, this.api.playerGuessedMessage.bind(this.api));
+    await this.play(senderID, 'Guess', word, this.api.playerGuessedMessage.bind(this.api));
   }
 
   async play(senderID, action, value, messageMethod) {
@@ -140,12 +144,12 @@ class MessageHandler {
       return this.api.roomDoesNotExistMessage(senderID, player.roomId);
     }
 
-    if(action === 'pass') {
+    if (action === 'pass') {
       room.game.pass(player);
-    } else if(player.position) {
+    } else if (player.position) {
       let prefix = player.position.substring(0, player.position.indexOf('_')).toLowerCase();
       room.game[prefix + action](player, value);
-      if(action === 'Guess') {
+      if (action === 'Guess') {
         var card = room.game._findCard(value);
         var suf = card.type.toLowerCase() === prefix
           ? '\u2714'
@@ -153,11 +157,18 @@ class MessageHandler {
         value = `${value} ${suf}`;
       }
     }
-    return this.broadcast(room.players, messageMethod, [player.name, value]);
+
+    await this.broadcast(room.players, messageMethod, [player.name, value]);
+
+    if (room.game.isTurnChanged() && room.findPlayerInTurn()) {
+      await this.broadcast(room.players, this.api.turnChangedMessage.bind(this.api), [room.findPlayerInTurn()]);
+    }
+
+    return;
   }
 
   broadcast(players, f, args) {
-    return Promise.all(players.map( p => {
+    return Promise.all(players.map(p => {
       return f.apply(null, [p.id].concat(args));
     }));
   }
@@ -171,10 +182,9 @@ class MessageHandler {
     if (!room) {
       return this.api.roomDoesNotExistMessage(senderID, player.roomId);
     }
-    if(player.isHinter()) {
+    if (player.isHinter()) {
       return this.api.showBoardHintMessage(senderID, room.game.cards);
-    }
-    else {
+    } else {
       return this.api.showBoardGuessMessage(senderID, room.game.cards);
     }
   }

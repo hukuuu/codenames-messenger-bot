@@ -13,6 +13,10 @@ class Room {
     return this.players.filter(player => player.id == id)[0];
   }
 
+  findPlayerInTurn() {
+    return this.players.filter(p => p.position === this.game.turn)[0];
+  }
+
   join(player) {
     var p = this.findPlayer(player.id);
     if (!p) {
