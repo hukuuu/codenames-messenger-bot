@@ -20,6 +20,7 @@ class Room {
   join(player) {
     var p = this.findPlayer(player.id);
     if (!p) {
+      player.roomId = this.id;
       this.players.push(player);
       player.position = gp.OBSERVER;
     }
@@ -50,6 +51,12 @@ class Room {
   }
 
   takePosition(player, position) {
+
+    if(position.toLowerCase().indexOf('observer') > -1) {
+      player.position = gp.OBSERVER;
+      return true;
+    }
+
     var availablePositions = this.findAvailablePositions();
     if (!availablePositions.includes(position))
       return false;

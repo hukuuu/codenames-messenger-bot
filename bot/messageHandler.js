@@ -173,6 +173,10 @@ class MessageHandler {
     }));
   }
 
+  broadcastExcept(players, ex, f, args) {
+    return this.broadcast(players.filter(p => p.id !== ex.id), f, args);
+  }
+
   async showBoard(senderID) {
     let player = await this.playersManager.findPlayer(senderID);
     if (!player.isInRoom()) {
@@ -199,8 +203,10 @@ class MessageHandler {
       return this.api.roomDoesNotExistMessage(senderID, player.roomId);
     }
     let ok = room.takePosition(player, position);
-    if (ok)
-      return this.api.okMessage(senderID);
+    if (ok) {
+      await this.api.okMessage(senderID);
+      return this.broadcastExcept(room.players, player, this.api.playerTookSlotMessage.bind(this.api), [player, position]);
+    }
     return this.api.positionBusyMessage(senderID);
   }
 
@@ -233,9 +239,9 @@ class MessageHandler {
     } else {
       let player = await this.playersManager.findPlayer(senderID);
       room.join(player);
-      player.roomId = room.id;
       console.log(player);
-      return this.api.welcomeToRoomMessage(senderID, room);
+      await this.api.welcomeToRoomMessage(senderID, room);
+      return this.broadcastExcept(room.players, player, this.api.playerJoinedMessage.bind(this.api), [player]);
     }
   }
 }

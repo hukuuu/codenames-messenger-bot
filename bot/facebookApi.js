@@ -88,6 +88,14 @@ class FacebookApi {
     return this.api.sendTextMessage(senderID, t.TURN_CHANGED(playerInTurn.getNiceName()));
   }
 
+  playerJoinedMessage(senderID, player) {
+    return this.api.sendTextMessage(senderID, t.PLAYER_JOINED(player.getNiceName()));
+  }
+
+  playerTookSlotMessage(senderID, player, slot) {
+    return this.api.sendTextMessage(senderID, t.PLAYER_TOOK_SLOT(player.getNiceName(), slot));
+  }
+
 }
 
 module.exports = FacebookApi;

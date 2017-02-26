@@ -68,6 +68,8 @@ module.exports = {
   PLAYER_PASSED: name => `***PASS***\n${name} passed.`,
 
   TURN_CHANGED: name => `${name}'s turn.`,
+  PLAYER_JOINED: name => `${name} joined the room`,
+  PLAYER_TOOK_SLOT: (name, slot) => `${name} took ${slot}`,
 
   CREATE_HELP: `create - create a new room.`,
   LIST_HELP: `list - list all available rooms.`,
