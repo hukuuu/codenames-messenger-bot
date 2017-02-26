@@ -4,7 +4,7 @@ module.exports = {
 
   LIST_ROOMS: (roomIds) => {
     return roomIds.length
-      ? `Available rooms:\n${roomIds.join(' ')}.\n(type "joie <room>")`
+      ? `Available rooms:\n${roomIds.join(' ')}.\n(type "join <room>")`
       : `No rooms available. Why don't you create one? (type "create")`;
   },
 
