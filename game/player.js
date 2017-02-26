@@ -1,13 +1,14 @@
 class Player {
-  constructor(id, name, roomId, position) {
+  constructor(id, name, nickName, roomId, position) {
     this.id = id;
     this.name = name;
     this.roomId = roomId;
     this.position = position;
+    this.nickName = nickName;
   }
 
   getNiceName() {
-    return this.name.substring(0, 5);
+    return this.nickName || this.name;
   }
 
   isHinter() {

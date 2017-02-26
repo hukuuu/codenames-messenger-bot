@@ -30,6 +30,10 @@ class Room {
     this.players = this.players.filter(p => p.id !== player.id);
   }
 
+  isReady() {
+    return this.findAvailablePositions().length === 0;
+  }
+
   findAvailablePositions() {
     var availablePositions = [];
     var takenPositions = this.players.reduce((acc, p) => {

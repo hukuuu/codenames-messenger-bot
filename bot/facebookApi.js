@@ -24,7 +24,7 @@ class FacebookApi {
   }
 
   async welcomeToRoomMessage(senderID, room) {
-    await this.api.sendTextMessage(senderID, t.WELCOME_TO_ROOM(room.id));
+    await this.api.sendTextMessage(senderID, t.WELCOME);
     await this.api.sendTextMessage(senderID, t.ROOM_INFO(room));
     return this.api.sendTextMessage(senderID, t.TEAM_HELP);
   }
@@ -65,7 +65,7 @@ class FacebookApi {
   }
 
   helpNotInRoomMessage(senderID) {
-    let composite = [t.LIST_HELP, t.CREATE_HELP, t.JOIN_HELP, t.HELP_HELP].join('\n');
+    let composite = [t.LIST_HELP, t.CREATE_HELP, t.JOIN_HELP, t.NICK_HELP, t.HELP_HELP].join('\n');
     return this.api.sendTextMessage(senderID, composite);
   }
 
@@ -94,6 +94,10 @@ class FacebookApi {
 
   playerTookSlotMessage(senderID, player, slot) {
     return this.api.sendTextMessage(senderID, t.PLAYER_TOOK_SLOT(player.getNiceName(), slot));
+  }
+
+  roomIsReadyMessage(senderID) {
+    return this.api.sendTextMessage(senderID, t.ROOM_IS_READY);
   }
 
 }

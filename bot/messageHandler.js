@@ -77,10 +77,19 @@ class MessageHandler {
         case 'help':
           await this.help(senderID);
           break;
+        case 'nick':
+          let nickName = value;
+          await this.setNickName(senderID, nickName);
+          break;
         default:
           // this.api.sendTextMessage(senderID, messageText);
       }
     }
+  }
+
+  async setNickName(senderID, nickName) {
+    this.playersManager.setNickName(senderID, nickName);
+    return this.api.okMessage(senderID);
   }
 
   async help(senderID) {
@@ -158,7 +167,7 @@ class MessageHandler {
       }
     }
 
-    await this.broadcast(room.players, messageMethod, [player.name, value]);
+    await this.broadcast(room.players, messageMethod, [player.getNiceName(), value]);
 
     if (room.game.isTurnChanged() && room.findPlayerInTurn()) {
       await this.broadcast(room.players, this.api.turnChangedMessage.bind(this.api), [room.findPlayerInTurn()]);
@@ -168,13 +177,19 @@ class MessageHandler {
   }
 
   broadcast(players, f, args) {
-    return Promise.all(players.map(p => {
-      return f.apply(null, [p.id].concat(args));
-    }));
+    return Promise.all(players.map(p => f.apply(null, [p.id].concat(args))));
   }
 
   broadcastExcept(players, ex, f, args) {
     return this.broadcast(players.filter(p => p.id !== ex.id), f, args);
+  }
+
+  broadcastBoard(players, cards) {
+    return Promise.all(players.map(p => {
+      return p.isHinter()
+        ? this.api.showBoardHintMessage(p.id, cards)
+        : this.api.showBoardGuessMessage(p.id, cards);
+    }));
   }
 
   async showBoard(senderID) {
@@ -205,6 +220,11 @@ class MessageHandler {
     let ok = room.takePosition(player, position);
     if (ok) {
       await this.api.okMessage(senderID);
+      if (room.isReady()) {
+        await this.broadcast(room.players, this.api.roomIsReadyMessage.bind(this.api), []);
+        await this.broadcastBoard(room.players, room.game.cards);
+        await this.broadcast(room.players, this.api.turnChangedMessage.bind(this.api), [room.findPlayerInTurn()]);
+      }
       return this.broadcastExcept(room.players, player, this.api.playerTookSlotMessage.bind(this.api), [player, position]);
     }
     return this.api.positionBusyMessage(senderID);

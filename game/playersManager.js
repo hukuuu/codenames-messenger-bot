@@ -1,7 +1,9 @@
 var Player = require('./player');
+var Storage = require('node-storage');
 
 class PlayersManager {
   constructor(api) {
+    this.store = new Storage('./nicknames');
     this.api = api;
     this.players = [];
   }
@@ -13,9 +15,19 @@ class PlayersManager {
       player = new Player(id, name);
       this.players.push(player);
     }
+    player.nickName = this.getNickName(id);
     console.log(player);
     return player;
   }
+
+  getNickName(id) {
+    return this.store.get(id);
+  }
+
+  setNickName(id, nickName) {
+    this.store.put(id, nickName);
+  }
+
 }
 
 module.exports = PlayersManager;

@@ -10,14 +10,13 @@ module.exports = {
 
   ROOM_DOES_NOT_EXIST: roomID => `Room ${roomID} does not exist.`,
 
-  WELCOME_TO_ROOM: roomID => `Welcome to room ${roomID}`,
 
   YOU_ARE_NOT_IN_A_ROOM: () => `You are not in a room.`,
   OK: () => `OK.`,
   POSITION_IS_BUSY: () => `Position is busy`,
 
   ROOM_INFO: (room) => {
-    let playersInfo = room.players.map(player => `${player.name} - ${player.position}`).join('\n')
+    let playersInfo = room.players.map(player => `${player.getNiceName()} - ${player.position}`).join('\n')
     return `Room ${room.id}\n${playersInfo}`
   },
 
@@ -71,6 +70,10 @@ module.exports = {
   PLAYER_JOINED: name => `${name} joined the room`,
   PLAYER_TOOK_SLOT: (name, slot) => `${name} took ${slot}`,
 
+
+  WELCOME: `***WELCOME***`,
+  ROOM_IS_READY: `Ok, all set up, lets start the game.`,
+
   CREATE_HELP: `create - create a new room.`,
   LIST_HELP: `list - list all available rooms.`,
   JOIN_HELP: `join <id> - join particular room.`,
@@ -81,6 +84,7 @@ module.exports = {
   HINT_HELP: `hint <word> <number> - hint.`,
   GUESS_HELP: `guess <word> - guess.`,
   PASS_HELP: `pass - pass`,
-  HELP_HELP: `help - show this help.`
+  HELP_HELP: `help - show this help.`,
+  NICK_HELP: `nick - choose a short nickname`
 
 };

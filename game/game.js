@@ -129,8 +129,6 @@ class Game {
     console.log(player.position, this.turn);
     console.log('player position: ', result);
     return result;
-    // if (player.slot !== this.turn)
-    // throw new Error(`Not your turn, ${player.name}...`)
   }
 
   _validateGameTurn() {
@@ -144,9 +142,6 @@ class Game {
     })
     console.log('game turn: ', safe);
     return safe
-    // if (!safe) {
-    // throw new Error(`Invalid state: game turn is ${this.turn}`)
-    // }
   }
 
   _getCountValue(count) {
