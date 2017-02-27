@@ -64,7 +64,8 @@ class MessageHandler {
           await this.log(senderID);
           break;
         case 'hint':
-          const [hint, count] = messageWords.slice(1);
+          const hint = messageWords.slice(1, messageWords.length -1).join(' ');
+          const count = messageWords[messageWords.length -1];
           await this.hint(senderID, hint, count);
           break;
         case 'guess':
@@ -78,7 +79,7 @@ class MessageHandler {
           await this.help(senderID);
           break;
         case 'nick':
-          let nickName = messageWords[1];
+          const nickName = messageWords[1];
           await this.setNickName(senderID, nickName);
           break;
         default:
