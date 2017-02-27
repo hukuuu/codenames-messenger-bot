@@ -37,7 +37,10 @@ module.exports = {
   },
   BOARD_GUESS: cards => `***BOARD***\n${cards.filter(c => !c.revealed).map(c => c.text).join(', ')}`,
 
-  PLAYER_HINTED: (name, hint) => `***HINT***\n${name}: ${hint.value} - ${hint.count}`,
+  PLAYER_HINTED: (name, hint) => {
+    const count = hint.count === 'infinity' ? '\u221E' : hint.count;
+    return `***HINT***\n${name}: ${hint.value} - ${count}`
+  },
 
   LOG: log => {
     let head = `***LOG***\n`;

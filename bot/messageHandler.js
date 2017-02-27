@@ -135,7 +135,7 @@ class MessageHandler {
   async hint(senderID, word, count) {
     let hint = {
       value: word,
-      count: count
+      count: count > 9 ? 'infinity' : count
     };
     await this.play(senderID, 'Tell', hint, this.api.playerHintedMessage.bind(this.api));
   }
