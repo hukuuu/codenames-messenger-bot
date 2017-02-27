@@ -227,12 +227,13 @@ class MessageHandler {
     let ok = room.takePosition(player, position);
     if (ok) {
       await this.api.okMessage(senderID);
+      await this.broadcastExcept(room.players, player, this.api.playerTookSlotMessage.bind(this.api), [player, position]);
       if (room.isReady()) {
         await this.broadcast(room.players, this.api.roomIsReadyMessage.bind(this.api), []);
         await this.broadcastBoard(room.players, room.game.cards);
         await this.broadcast(room.players, this.api.turnChangedMessage.bind(this.api), [room.findPlayerInTurn()]);
       }
-      return this.broadcastExcept(room.players, player, this.api.playerTookSlotMessage.bind(this.api), [player, position]);
+      return;
     }
     return this.api.positionBusyMessage(senderID);
   }
