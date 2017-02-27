@@ -41,11 +41,14 @@ class MessageHandler {
       // keywords and send back the corresponding example. Otherwise, just echo
       // the text we received.
       switch (action) {
+        case 'test':
+          await this.api.testIconsMessage(senderID);
+          break;
         case 'create':
-          this.createRoom(senderID);
+          await this.createRoom(senderID);
           break;
         case 'list':
-          this.listRooms(senderID);
+          await this.listRooms(senderID);
           break;
         case 'join':
           await this.joinRoom(senderID, value);
@@ -170,7 +173,12 @@ class MessageHandler {
 
     await this.broadcast(room.players, messageMethod, [player.getNiceName(), value]);
 
-    if (room.game.isTurnChanged() && room.findPlayerInTurn()) {
+    if(room.game.winner) {
+      await Promise.all(room.players.map(p => {
+        let win = p.position.toLowerCase().indexOf(room.game.winner.toLowerCase()) > -1;
+        return this.api.gameOverMessage(p.id, win);
+      }));
+    } else if (room.game.isTurnChanged() && room.findPlayerInTurn()) {
       await this.broadcast(room.players, this.api.turnChangedMessage.bind(this.api), [room.findPlayerInTurn()]);
     }
 

@@ -11,6 +11,22 @@ class FacebookApi {
     return this.api.findName(id);
   }
 
+  testIconsMessage(senderID) {
+    return this.api.sendTextMessage(senderID, [
+      'bomb: \uD83D\uDCA3',
+      'boom: \uD83D\uDCA5',
+      'large red circle: \uD83D\uDD34',
+      'large blue circle: \uD83D\uDD35',
+      'persevere: \uD83D\uDE23',
+      'dizzy face: \uD83D\uDE35',
+      'cry: \uD83D\uDE2D',
+      'red \uD83D\uDD34',
+      'blue \uD83D\uDD35',
+      'neutral \u25EF',
+      'assassin \u2B24'
+    ].join('\n'));
+  }
+
   unknownCommandMessage(senderID, command) {
     return this.api.sendTextMessage(senderID, t.UNKNOWN_COMMAND(command));
   }
@@ -102,6 +118,10 @@ class FacebookApi {
 
   roomIsReadyMessage(senderID) {
     return this.api.sendTextMessage(senderID, t.ROOM_IS_READY);
+  }
+
+  gameOverMessage(senderID, win) {
+    return this.api.sendTextMessage(senderID, t.GAME_OVER(win));
   }
 
 }

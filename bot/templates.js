@@ -45,13 +45,29 @@ module.exports = {
     let body = log.map(logItem => {
       let name = logItem.player.getNiceName();
       let card = '';
+
       if (logItem.card)
         card = logItem.card.text + ' ' + (logItem.success
           ? '\u2714'
           : '\u2718');
+
+      let team = logItem.player.position
+        .substring(0, logItem.player.position.indexOf('_'))
+        .toLowerCase();
+
+      let icons = {
+        red:'\uD83D\uDD34',
+        blue:'\uD83D\uDD35',
+        neutral:'\u25EF',
+        assassin:'\uD83D\uDCA3'
+      };
+
       let hint = logItem.hint
-        ? logItem.hint.value + ' ' + logItem.hint.count
+        ? `${icons[team]} ${logItem.hint.value} ${logItem.hint.count}`
         : '';
+
+      if(logItem.card)
+        card = `${logItem.card.text} ${icons[logItem.card.type]}`;
 
       let action = logItem.action === 'pass'
         ? '\u2714'
@@ -71,6 +87,8 @@ module.exports = {
   PLAYER_TOOK_SLOT: (name, slot) => `${name} took ${slot}`,
 
   UNKNOWN_COMMAND: command => `Unknown command: ${command}`,
+
+  GAME_OVER: win => `You ${win? 'won ;)' : 'lost ;('}`,
 
 
   WELCOME: `***WELCOME***`,
