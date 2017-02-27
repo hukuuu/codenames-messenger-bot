@@ -34,13 +34,9 @@ class MessageHandler {
     }
 
     if (messageText) {
-      var [action,
-        value,
-        value2] = messageText.toLowerCase().split(' ');
-      // If we receive a text message, check to see if it matches any special
-      // keywords and send back the corresponding example. Otherwise, just echo
-      // the text we received.
-      switch (action) {
+      const messageWords = messageText.toLowerCase().split(' ');
+      const command = messageWords[0];
+      switch (command) {
         case 'test':
           await this.api.testIconsMessage(senderID);
           break;
@@ -51,10 +47,12 @@ class MessageHandler {
           await this.listRooms(senderID);
           break;
         case 'join':
-          await this.joinRoom(senderID, value);
+          const roomId = messageWords[1];
+          await this.joinRoom(senderID, roomId);
           break;
         case 'team':
-          await this.takeSlot(senderID, `${value}_${value2}`.toUpperCase());
+          const [team, position] = messageWords.slice(1);
+          await this.takeSlot(senderID, `${team}_${position}`.toUpperCase());
           break;
         case 'room':
           await this.showRoomInfo(senderID);
@@ -66,12 +64,11 @@ class MessageHandler {
           await this.log(senderID);
           break;
         case 'hint':
-          let [hint,
-            count] = [value, value2];
+          const [hint, count] = messageWords.slice(1);
           await this.hint(senderID, hint, count);
           break;
         case 'guess':
-          let word = value;
+          const word = messageWords[1];
           await this.guess(senderID, word);
           break;
         case 'pass':
@@ -81,11 +78,11 @@ class MessageHandler {
           await this.help(senderID);
           break;
         case 'nick':
-          let nickName = value;
+          let nickName = messageWords[1];
           await this.setNickName(senderID, nickName);
           break;
         default:
-          await this.api.unknownCommandMessage(senderID, action);
+          await this.api.unknownCommandMessage(senderID, command);
           break;
       }
     }
@@ -146,7 +143,7 @@ class MessageHandler {
     await this.play(senderID, 'Guess', word, this.api.playerGuessedMessage.bind(this.api));
   }
 
-  async play(senderID, action, value, messageMethod) {
+  async play(senderID, command, value, messageMethod) {
 
     let player = await this.playersManager.findPlayer(senderID);
     if (!player.isInRoom()) {
@@ -157,12 +154,12 @@ class MessageHandler {
       return this.api.roomDoesNotExistMessage(senderID, player.roomId);
     }
 
-    if (action === 'pass') {
+    if (command === 'pass') {
       room.game.pass(player);
     } else if (player.position) {
       let prefix = player.position.substring(0, player.position.indexOf('_')).toLowerCase();
-      room.game[prefix + action](player, value);
-      if (action === 'Guess') {
+      room.game[prefix + command](player, value);
+      if (command === 'Guess') {
         var card = room.game._findCard(value);
         var suf = card.type.toLowerCase() === prefix
           ? '\u2714'
