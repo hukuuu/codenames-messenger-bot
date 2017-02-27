@@ -69,7 +69,7 @@ class MessageHandler {
           await this.hint(senderID, hint, count);
           break;
         case 'guess':
-          const word = messageWords[1];
+          const word = messageWords.slice(1).join(' ');
           await this.guess(senderID, word);
           break;
         case 'pass':
