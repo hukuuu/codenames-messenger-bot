@@ -260,6 +260,7 @@ class MessageHandler {
     } else {
       let player = await this.playersManager.findPlayer(senderID);
       room.join(player);
+      this.roomsManager.removePlayerFromOtherRooms(player, room);
       console.log(player);
       await this.api.welcomeToRoomMessage(senderID, room);
       return this.broadcastExcept(room.players, player, this.api.playerJoinedMessage.bind(this.api), [player]);

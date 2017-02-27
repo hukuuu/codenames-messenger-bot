@@ -8,7 +8,6 @@ var Player = require('./player');
 // testRoom.game.redTell(testPlayer, {value: 'traktor', count: '4'});
 // testRoom.takePosition(testPlayer, 'RED_GUESS');
 
-
 class RoomsManager {
   constructor() {
     this.id = 0;
@@ -28,6 +27,14 @@ class RoomsManager {
 
   listRooms() {
     return this.rooms.map(room => room.id);
+  }
+
+  removePlayerFromOtherRooms(player, room) {
+    this.rooms.forEach(r => {
+      if (r.id !== room.id)
+        r.leave(player);
+      }
+    );
   }
 
 }
