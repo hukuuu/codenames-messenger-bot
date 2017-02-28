@@ -94,6 +94,8 @@ module.exports = {
     ? 'won ;)'
     : 'lost ;('}`,
 
+  MORE_WORDS: more => `${more - 1} (+1) more to guess.`,
+
   WELCOME: `***WELCOME***`,
   ROOM_IS_READY: `Ok, all set up, lets start the game.`,
 

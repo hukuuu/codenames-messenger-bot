@@ -155,11 +155,12 @@ class MessageHandler {
       return this.api.roomDoesNotExistMessage(senderID, player.roomId);
     }
 
+    const team = player.getTeam();
+    console.log(team);
     if (command === 'pass') {
       room.game.pass(player);
-    } else if (player.position) {
-      let prefix = player.position.substring(0, player.position.indexOf('_')).toLowerCase();
-      room.game[prefix + command](player, value);
+    } else if (team) {
+      room.game[team + command](player, value);
       if (command === 'Guess') {
         value = room.game._findCard(value);
       }
@@ -174,6 +175,12 @@ class MessageHandler {
       }));
     } else if (room.game.isTurnChanged() && room.findPlayerInTurn()) {
       await this.broadcast(room.players, this.api.turnChangedMessage.bind(this.api), [room.findPlayerInTurn()]);
+    }
+
+    if(!room.game.isTurnChanged() && team) {
+      const more = room.game[team+'Hint'].left;
+      if(more >= 0)
+        await this.api.moreWordsMessage(senderID, more);
     }
 
     return;

@@ -127,6 +127,10 @@ class FacebookApi {
     return this.api.sendTextMessage(senderID, t.GAME_OVER(win));
   }
 
+  moreWordsMessage(senderID, more) {
+    return this.api.sendTextMessage(senderID, t.MORE_WORDS(more));
+  }
+
 }
 
 module.exports = FacebookApi;

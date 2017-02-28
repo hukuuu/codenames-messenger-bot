@@ -145,9 +145,11 @@ class Game {
   }
 
   _getCountValue(count) {
-    if (count === 'infinity' || count === 0)
-      return 0
-    return count + 1
+    const c = parseInt(count);
+    if(isNaN(c) || c === 0) {
+      return 0;
+    }
+    return c + 1;
   }
 
   _computeWinner() {

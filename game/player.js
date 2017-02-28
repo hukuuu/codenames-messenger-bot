@@ -23,6 +23,12 @@ class Player {
     return this.roomId || this.roomId === 0;
   }
 
+  getTeam() {
+    if (!this.position || this.position === 'OBSERVER')
+      return null;
+    return this.position.substring(0, this.position.indexOf('_')).toLowerCase();
+  }
+
 }
 
 module.exports = Player;
