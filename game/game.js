@@ -209,8 +209,11 @@ class Game {
 
   }
 
-  _findCard(word) {
-    return this.cards.filter(card => card.text.toLowerCase() === word.toLowerCase())[0];
+  _findCard(w) {
+    const card = this.cards.filter(c => c.text.toLowerCase() === w.toLowerCase())[0];
+    if(!card)
+      throw new Error('Could not find card: ' + w);
+    return card;
   }
 
   _computeInitialState(cards) {

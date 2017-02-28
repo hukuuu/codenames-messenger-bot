@@ -16,6 +16,7 @@ class MessageHandler {
       await this._handleMessage(event);
     } catch (e) {
       console.error(e);
+      await this.api.logErrorMessage(event.sender.id, e.message);
     }
   }
 
@@ -124,7 +125,6 @@ class MessageHandler {
     if (!room) {
       return this.api.roomDoesNotExistMessage(senderID, player.roomId);
     }
-    console.log(room.game.log);
     return this.api.logGameStateMessage(senderID, room.game.log);
   }
 
@@ -250,7 +250,7 @@ class MessageHandler {
     return this.api.showRoomInfoMessage(senderID, room);
   }
 
-  createRoom(senderID) {
+  async createRoom(senderID) {
     let room = this.roomsManager.createRoom();
     return this.api.roomCreatedMessage(senderID, room.id);
   }
@@ -268,7 +268,6 @@ class MessageHandler {
       let player = await this.playersManager.findPlayer(senderID);
       room.join(player);
       this.roomsManager.removePlayerFromOtherRooms(player, room);
-      console.log(player);
       await this.api.welcomeToRoomMessage(senderID, room);
       return this.broadcastExcept(room.players, player, this.api.playerJoinedMessage.bind(this.api), [player]);
     }

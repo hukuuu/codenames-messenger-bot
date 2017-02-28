@@ -27,6 +27,10 @@ class FacebookApi {
     ].join('\n'));
   }
 
+  logErrorMessage(senderID, error) {
+    return this.api.sendTextMessage(senderID, error);
+  }
+
   unknownCommandMessage(senderID, command) {
     return this.api.sendTextMessage(senderID, t.UNKNOWN_COMMAND(command));
   }
