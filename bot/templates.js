@@ -1,3 +1,10 @@
+const icons = {
+  red: '\uD83D\uDD34',
+  blue: '\uD83D\uDD35',
+  neutral: '\u25EF',
+  assassin: '\uD83D\uDCA3'
+};
+
 module.exports = {
 
   ROOM_CREATED: roomID => `Room "${roomID}" created.`,
@@ -9,7 +16,6 @@ module.exports = {
   },
 
   ROOM_DOES_NOT_EXIST: roomID => `Room ${roomID} does not exist.`,
-
 
   YOU_ARE_NOT_IN_A_ROOM: () => `You are not in a room.`,
   OK: () => `OK.`,
@@ -38,7 +44,9 @@ module.exports = {
   BOARD_GUESS: cards => `***BOARD***\n${cards.filter(c => !c.revealed).map(c => c.text).join(', ')}`,
 
   PLAYER_HINTED: (name, hint) => {
-    const count = hint.count === 'infinity' ? '\u221E' : hint.count;
+    const count = hint.count === 'infinity'
+      ? '\u221E'
+      : hint.count;
     return `***HINT***\n${name}: ${hint.value} - ${count}`
   },
 
@@ -54,22 +62,13 @@ module.exports = {
           ? '\u2714'
           : '\u2718');
 
-      let team = logItem.player.position
-        .substring(0, logItem.player.position.indexOf('_'))
-        .toLowerCase();
-
-      let icons = {
-        red:'\uD83D\uDD34',
-        blue:'\uD83D\uDD35',
-        neutral:'\u25EF',
-        assassin:'\uD83D\uDCA3'
-      };
+      let team = logItem.player.position.substring(0, logItem.player.position.indexOf('_')).toLowerCase();
 
       let hint = logItem.hint
         ? `${icons[team]} ${logItem.hint.value} ${logItem.hint.count}`
         : '';
 
-      if(logItem.card)
+      if (logItem.card)
         card = `${logItem.card.text} ${icons[logItem.card.type]}`;
 
       let action = logItem.action === 'pass'
@@ -82,7 +81,7 @@ module.exports = {
     return head + body.join('\n');
   },
 
-  PLAYER_GUESSED: (name, word) => `***GUESS***\n${name}: ${word}`,
+  PLAYER_GUESSED: (name, card) => `***GUESS***\n${name}: ${card.text} ${icons[card.type]}`,
   PLAYER_PASSED: name => `***PASS***\n${name} passed.`,
 
   TURN_CHANGED: name => `${name}'s turn.`,
@@ -91,8 +90,9 @@ module.exports = {
 
   UNKNOWN_COMMAND: command => `Unknown command: ${command}`,
 
-  GAME_OVER: win => `You ${win? 'won ;)' : 'lost ;('}`,
-
+  GAME_OVER: win => `You ${win
+    ? 'won ;)'
+    : 'lost ;('}`,
 
   WELCOME: `***WELCOME***`,
   ROOM_IS_READY: `Ok, all set up, lets start the game.`,

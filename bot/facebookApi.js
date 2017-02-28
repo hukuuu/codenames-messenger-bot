@@ -16,7 +16,6 @@ class FacebookApi {
       'bomb: \uD83D\uDCA3',
       'boom: \uD83D\uDCA5',
       'large red circle: \uD83D\uDD34',
-      'large blue circle: \uD83D\uDD35',
       'persevere: \uD83D\uDE23',
       'dizzy face: \uD83D\uDE35',
       'cry: \uD83D\uDE2D',
@@ -76,8 +75,8 @@ class FacebookApi {
   playerHintedMessage(senderID, name, hint) {
     return this.api.sendTextMessage(senderID, t.PLAYER_HINTED(name, hint));
   }
-  playerGuessedMessage(senderID, name, word) {
-    return this.api.sendTextMessage(senderID, t.PLAYER_GUESSED(name, word));
+  playerGuessedMessage(senderID, name, card) {
+    return this.api.sendTextMessage(senderID, t.PLAYER_GUESSED(name, card));
   }
 
   playerPassedMessage(senderID, name) {

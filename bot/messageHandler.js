@@ -161,11 +161,7 @@ class MessageHandler {
       let prefix = player.position.substring(0, player.position.indexOf('_')).toLowerCase();
       room.game[prefix + command](player, value);
       if (command === 'Guess') {
-        var card = room.game._findCard(value);
-        var suf = card.type.toLowerCase() === prefix
-          ? '\u2714'
-          : '\u2718';
-        value = `${value} ${suf}`;
+        value = room.game._findCard(value);
       }
     }
 
