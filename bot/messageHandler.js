@@ -212,9 +212,9 @@ class MessageHandler {
       return this.api.roomDoesNotExistMessage(senderID, player.roomId);
     }
     if (player.isHinter()) {
-      return this.api.showBoardHintMessage(senderID, room.game.cards);
+      return this.api.showBoardHintMessage(senderID, room.game);
     } else {
-      return this.api.showBoardGuessMessage(senderID, room.game.cards);
+      return this.api.showBoardGuessMessage(senderID, room.game);
     }
   }
 

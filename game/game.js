@@ -237,6 +237,18 @@ class Game {
     this.log.push({action: 'hint', timestamp: Date.now(), player: player, hint: hint})
   }
 
+  getResult() {
+    let red = 0;
+    let blue = 0;
+    this.cards.forEach(c=>{
+      if(!c.revealed && c.type === 'red')
+        red++;
+      if(!c.revealed && c.type === 'blue')
+        blue++;
+    });
+    return {red, blue};
+  }
+
 }
 
 module.exports = Game;

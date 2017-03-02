@@ -26,7 +26,7 @@ module.exports = {
     return `Room ${room.id}\n${playersInfo}`
   },
 
-  BOARD_HINT: cards => {
+  BOARD_HINT: (cards, result) => {
     const t = {};
     cards.filter(c => !c.revealed).forEach(c => {
       t[c.type] = t[c.type]
@@ -39,9 +39,12 @@ module.exports = {
 
 ***RED***\n${t.red.join(', ')}
 
-***BLUE***\n${t.blue.join(', ')}`;
+***BLUE***\n${t.blue.join(', ')}
+
+red ${result.red} - ${result.blue}`;
   },
-  BOARD_GUESS: cards => `***BOARD***\n${cards.filter(c => !c.revealed).map(c => c.text).join(', ')}`,
+  BOARD_GUESS: (cards,result) => `***BOARD***\n${cards.filter(c => !c.revealed).map(c => c.text).join(', ')}
+--------------\nred ${result.red} - ${result.blue} blue`,
 
   PLAYER_HINTED: (name, hint) => {
     const count = hint.count === 'infinity'

@@ -65,11 +65,11 @@ class FacebookApi {
     return this.api.sendTextMessage(senderID, t.ROOM_INFO(room));
   }
 
-  showBoardHintMessage(senderID, cards) {
-    return this.api.sendTextMessage(senderID, t.BOARD_HINT(cards));
+  showBoardHintMessage(senderID, game) {
+    return this.api.sendTextMessage(senderID, t.BOARD_HINT(game.cards, game.getResult()));
   }
-  showBoardGuessMessage(senderID, cards) {
-    return this.api.sendTextMessage(senderID, t.BOARD_GUESS(cards));
+  showBoardGuessMessage(senderID, game) {
+    return this.api.sendTextMessage(senderID, t.BOARD_GUESS(game.cards, game.getResult()));
   }
 
   playerHintedMessage(senderID, name, hint) {
