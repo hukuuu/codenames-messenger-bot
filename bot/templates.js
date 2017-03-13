@@ -41,7 +41,7 @@ module.exports = {
 
 ***BLUE***\n${t.blue.join(', ')}
 
-red ${result.red} - ${result.blue}`;
+red ${result.red} - ${result.blue} blue`;
   },
   BOARD_GUESS: (cards,result) => `***BOARD***\n${cards.filter(c => !c.revealed).map(c => c.text).join(', ')}
 --------------\nred ${result.red} - ${result.blue} blue`,

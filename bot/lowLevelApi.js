@@ -135,10 +135,10 @@ class LowLevelApi {
 
     const ms = 1500 + messageText.length * 3;
 
-    await this.sendTypingOn(recipientId);
-    console.log('delay', ms, 'ms');
-    await sleep(ms);
-    await this.sendTypingOff(recipientId);
+    // await this.sendTypingOn(recipientId);
+    // console.log('delay', ms, 'ms');
+    // await sleep(ms);
+    // await this.sendTypingOff(recipientId);
 
     return this.callSendAPI(messageData);
   }

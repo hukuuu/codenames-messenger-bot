@@ -11,6 +11,22 @@ class FacebookApi {
     return this.api.findName(id);
   }
 
+  broadcast(players, f, args) {
+    return Promise.all(players.map(p => f.apply(null, [p.id].concat(args))));
+  }
+
+  broadcastExcept(players, ex, f, args) {
+    return this.broadcast(players.filter(p => p.id !== ex.id), f, args);
+  }
+
+  broadcastBoard(players, cards) {
+    return Promise.all(players.map(p => {
+      return p.isHinter()
+        ? this.api.showBoardHintMessage(p.id, cards)
+        : this.api.showBoardGuessMessage(p.id, cards);
+    }));
+  }
+
   testIconsMessage(senderID) {
     return this.api.sendTextMessage(senderID, [
       'bomb: \uD83D\uDCA3',
