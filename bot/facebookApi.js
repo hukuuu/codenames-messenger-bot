@@ -7,6 +7,22 @@ class FacebookApi {
     this.api = new LowLevelApi(pageAccessToken);
   }
 
+  testIconsMessage(playerId) {
+    return this.api.sendTextMessage(playerId, [
+      'bomb: \uD83D\uDCA3',
+      'boom: \uD83D\uDCA5',
+      'large red circle: \uD83D\uDD34',
+      'persevere: \uD83D\uDE23',
+      'dizzy face: \uD83D\uDE35',
+      'cry: \uD83D\uDE2D',
+      'red \uD83D\uDD34',
+      'blue \uD83D\uDD35',
+      'neutral \u25EF',
+      'assassin \u2B24'
+    ].join('\n'));
+  }
+
+
   findName(id) {
     return this.api.findName(id);
   }
@@ -27,124 +43,124 @@ class FacebookApi {
     }));
   }
 
-  testIconsMessage(senderID) {
-    return this.api.sendTextMessage(senderID, [
-      'bomb: \uD83D\uDCA3',
-      'boom: \uD83D\uDCA5',
-      'large red circle: \uD83D\uDD34',
-      'persevere: \uD83D\uDE23',
-      'dizzy face: \uD83D\uDE35',
-      'cry: \uD83D\uDE2D',
-      'red \uD83D\uDD34',
-      'blue \uD83D\uDD35',
-      'neutral \u25EF',
-      'assassin \u2B24'
-    ].join('\n'));
+  showTeamMenuMessage(playerId) {
+    const replies = [
+      {
+        "content_type": "text",
+        "title": "Red",
+        "payload": "DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_ACTION"
+      }, {
+        "content_type": "text",
+        "title": "Blue",
+        "payload": "DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_ACTION"
+      }
+    ];
+    return this.api.sendQuickReply(playerId, 'Pick a team:', replies);
   }
 
-  logErrorMessage(senderID, error) {
-    return this.api.sendTextMessage(senderID, error);
+  logErrorMessage(playerId, error) {
+    return this.api.sendTextMessage(playerId, error);
   }
 
-  unknownCommandMessage(senderID, command) {
-    return this.api.sendTextMessage(senderID, t.UNKNOWN_COMMAND(command));
+  unknownCommandMessage(playerId, command) {
+    return this.api.sendTextMessage(playerId, t.UNKNOWN_COMMAND(command));
   }
 
-  roomCreatedMessage(senderID, roomID) {
-    return this.api.sendTextMessage(senderID, t.ROOM_CREATED(roomID));
+  roomCreatedMessage(playerId, roomID) {
+    return this.api.sendTextMessage(playerId, t.ROOM_CREATED(roomID));
   }
 
-  listRoomsMessage(senderID, roomIds) {
-    return this.api.sendTextMessage(senderID, t.LIST_ROOMS(roomIds));
+  listRoomsMessage(playerId, roomIds) {
+    return this.api.sendTextMessage(playerId, t.LIST_ROOMS(roomIds));
   }
 
-  roomDoesNotExistMessage(senderID, roomID) {
-    return this.api.sendTextMessage(senderID, t.ROOM_DOES_NOT_EXIST(roomID));
+  roomDoesNotExistMessage(playerId, roomID) {
+    return this.api.sendTextMessage(playerId, t.ROOM_DOES_NOT_EXIST(roomID));
   }
 
-  async welcomeToRoomMessage(senderID, room) {
-    await this.api.sendTextMessage(senderID, t.WELCOME);
-    await this.api.sendTextMessage(senderID, t.ROOM_INFO(room));
-    return this.api.sendTextMessage(senderID, t.TEAM_HELP);
+  async welcomeToRoomMessage(playerId, room) {
+    await this.api.sendTextMessage(playerId, t.WELCOME);
+    await this.api.sendTextMessage(playerId, t.ROOM_INFO(room));
+    return this.api.sendTextMessage(playerId, t.TEAM_HELP);
   }
 
-  youAreNotInARoomMessage(senderID) {
-    return this.api.sendTextMessage(senderID, t.YOU_ARE_NOT_IN_A_ROOM());
+  youAreNotInARoomMessage(playerId) {
+    return this.api.sendTextMessage(playerId, t.YOU_ARE_NOT_IN_A_ROOM());
   }
-  okMessage(senderID) {
-    return this.api.sendTextMessage(senderID, t.OK());
+  okMessage(playerId) {
+    return this.api.sendTextMessage(playerId, t.OK());
   }
-  positionBusyMessage(senderID) {
-    return this.api.sendTextMessage(senderID, t.POSITION_IS_BUSY());
+  positionBusyMessage(playerId) {
+    return this.api.sendTextMessage(playerId, t.POSITION_IS_BUSY());
   }
-  showRoomInfoMessage(senderID, room) {
-    return this.api.sendTextMessage(senderID, t.ROOM_INFO(room));
-  }
-
-  showBoardHintMessage(senderID, game) {
-    return this.api.sendTextMessage(senderID, t.BOARD_HINT(game.cards, game.getResult()));
-  }
-  showBoardGuessMessage(senderID, game) {
-    return this.api.sendTextMessage(senderID, t.BOARD_GUESS(game.cards, game.getResult()));
+  showRoomInfoMessage(playerId, room) {
+    return this.api.sendTextMessage(playerId, t.ROOM_INFO(room));
   }
 
-  playerHintedMessage(senderID, name, hint) {
-    return this.api.sendTextMessage(senderID, t.PLAYER_HINTED(name, hint));
+  showBoardHintMessage(playerId, game) {
+    return this.api.sendTextMessage(playerId, t.BOARD_HINT(game.cards, game.getResult()));
   }
-  playerGuessedMessage(senderID, name, card) {
-    return this.api.sendTextMessage(senderID, t.PLAYER_GUESSED(name, card));
-  }
-
-  playerPassedMessage(senderID, name) {
-    return this.api.sendTextMessage(senderID, t.PLAYER_PASSED(name));
+  showBoardGuessMessage(playerId, game) {
+    return this.api.sendTextMessage(playerId, t.BOARD_GUESS(game.cards, game.getResult()));
   }
 
-  logGameStateMessage(senderID, log) {
-    return this.api.sendTextMessage(senderID, t.LOG(log));
+  playerHintedMessage(playerId, name, hint) {
+    return this.api.sendTextMessage(playerId, t.PLAYER_HINTED(name, hint));
+  }
+  playerGuessedMessage(playerId, name, card) {
+    return this.api.sendTextMessage(playerId, t.PLAYER_GUESSED(name, card));
   }
 
-  helpNotInRoomMessage(senderID) {
+  playerPassedMessage(playerId, name) {
+    return this.api.sendTextMessage(playerId, t.PLAYER_PASSED(name));
+  }
+
+  logGameStateMessage(playerId, log) {
+    return this.api.sendTextMessage(playerId, t.LOG(log));
+  }
+
+  helpNotInRoomMessage(playerId) {
     let composite = [t.LIST_HELP, t.CREATE_HELP, t.JOIN_HELP, t.NICK_HELP, t.HELP_HELP].join('\n');
-    return this.api.sendTextMessage(senderID, composite);
+    return this.api.sendTextMessage(playerId, composite);
   }
 
-  helpTellMessage(senderID) {
+  helpTellMessage(playerId) {
     let composite = [t.ROOM_HELP, t.BOARD_HELP, t.LOG_HELP, t.HINT_HELP, t.HELP_HELP].join('\n');
-    return this.api.sendTextMessage(senderID, composite);
+    return this.api.sendTextMessage(playerId, composite);
   }
 
-  helpGuessMessage(senderID) {
+  helpGuessMessage(playerId) {
     let composite = [t.ROOM_HELP, t.BOARD_HELP, t.LOG_HELP, t.GUESS_HELP, t.PASS_HELP, t.HELP_HELP].join('\n');
-    return this.api.sendTextMessage(senderID, composite);
+    return this.api.sendTextMessage(playerId, composite);
   }
 
-  helpObserverMessage(senderID) {
+  helpObserverMessage(playerId) {
     let composite = [t.TEAM_HELP, t.BOARD_HELP, t.LOG_HELP, t.HELP_HELP].join('\n');
-    return this.api.sendTextMessage(senderID, composite);
+    return this.api.sendTextMessage(playerId, composite);
   }
 
-  turnChangedMessage(senderID, playerInTurn) {
-    return this.api.sendTextMessage(senderID, t.TURN_CHANGED(playerInTurn.getNiceName()));
+  turnChangedMessage(playerId, playerInTurn) {
+    return this.api.sendTextMessage(playerId, t.TURN_CHANGED(playerInTurn.getNiceName()));
   }
 
-  playerJoinedMessage(senderID, player) {
-    return this.api.sendTextMessage(senderID, t.PLAYER_JOINED(player.getNiceName()));
+  playerJoinedMessage(playerId, player) {
+    return this.api.sendTextMessage(playerId, t.PLAYER_JOINED(player.getNiceName()));
   }
 
-  playerTookSlotMessage(senderID, player, slot) {
-    return this.api.sendTextMessage(senderID, t.PLAYER_TOOK_SLOT(player.getNiceName(), slot));
+  playerTookSlotMessage(playerId, player, slot) {
+    return this.api.sendTextMessage(playerId, t.PLAYER_TOOK_SLOT(player.getNiceName(), slot));
   }
 
-  roomIsReadyMessage(senderID) {
-    return this.api.sendTextMessage(senderID, t.ROOM_IS_READY);
+  roomIsReadyMessage(playerId) {
+    return this.api.sendTextMessage(playerId, t.ROOM_IS_READY);
   }
 
-  gameOverMessage(senderID, win) {
-    return this.api.sendTextMessage(senderID, t.GAME_OVER(win));
+  gameOverMessage(playerId, win) {
+    return this.api.sendTextMessage(playerId, t.GAME_OVER(win));
   }
 
-  moreWordsMessage(senderID, more) {
-    return this.api.sendTextMessage(senderID, t.MORE_WORDS(more));
+  moreWordsMessage(playerId, more) {
+    return this.api.sendTextMessage(playerId, t.MORE_WORDS(more));
   }
 
 }

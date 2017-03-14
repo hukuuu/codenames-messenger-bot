@@ -43,7 +43,7 @@ if (!(APP_SECRET && VALIDATION_TOKEN && PAGE_ACCESS_TOKEN && SERVER_URL)) {
   process.exit(1);
 }
 
-var messageHandler = new MessageHandler(PAGE_ACCESS_TOKEN)
+var messageHandler = new MessageHandler(PAGE_ACCESS_TOKEN);
 
 /*
  * Use your own validation token. Check that the token used in the Webhook
