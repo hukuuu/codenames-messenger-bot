@@ -23,10 +23,15 @@ class Player {
     return this.roomId || this.roomId === 0;
   }
 
+  setPosition(pos) {
+    this.position = `${this.team.toUpperCase()}_${pos.toUpperCase()}`;
+  }
+
   getTeam() {
-    if (!this.position || this.position === 'OBSERVER')
-      return null;
-    return this.position.substring(0, this.position.indexOf('_')).toLowerCase();
+    return this.team ? this.team.toLowerCase() : this.team;
+    // if (!this.position || this.position === 'OBSERVER')
+    //   return null;
+    // return this.position.substring(0, this.position.indexOf('_')).toLowerCase();
   }
 
 }

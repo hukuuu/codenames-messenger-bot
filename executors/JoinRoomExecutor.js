@@ -14,7 +14,8 @@ class JoinRoomExecutor {
     room.join(player);
     roomsManager.removePlayerFromOtherRooms(player, room);
     await api.welcomeToRoomMessage(player.id, room);
-    return api.broadcastExcept(room.players, player, api.playerJoinedMessage.bind(api), [player]);
+    await api.broadcastExcept(room.players, player, api.playerJoinedMessage.bind(api), [player]);
+    return api.showTeamMenuMessage(player.id);
 
   }
 }

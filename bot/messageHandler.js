@@ -16,6 +16,10 @@ const PassExecutor = require('../executors/PassExecutor');
 const HelpExecutor = require('../executors/HelpExecutor');
 const NickExecutor = require('../executors/NickExecutor');
 
+const ShowTeamMenuExecutor = require('../executors/team/ShowTeamMenuExecutor');
+const ChooseTeamExecutor = require('../executors/team/ChooseTeamExecutor');
+const ChoosePositionExecutor = require('../executors/team/ChoosePositionExecutor');
+
 class MessageHandler {
 
   constructor(pageAccessToken) {
@@ -28,7 +32,7 @@ class MessageHandler {
     new CreateRoomExecutor(this.container);
     new ListRoomsExecutor(this.container);
     new JoinRoomExecutor(this.container);
-    new JoinTeamExecutor(this.container);
+    // new JoinTeamExecutor(this.container);
     new ShowRoomInfoExecutor(this.container);
     new ShowBoardExecutor(this.container);
     new ShowLogExecutor(this.container);
@@ -37,6 +41,10 @@ class MessageHandler {
     new PassExecutor(this.container);
     new HelpExecutor(this.container);
     new NickExecutor(this.container);
+
+    new ShowTeamMenuExecutor(this.container);
+    new ChooseTeamExecutor(this.container);
+    new ChoosePositionExecutor(this.container);
 
   }
 
@@ -52,7 +60,10 @@ class MessageHandler {
   async _handleMessage(event) {
     const player = await this.playersManager.findPlayer(event.sender.id);
     const room = this.roomsManager.findRoom(player.roomId);
-    const messageText = event.message.text;
+
+    const messageText = event.message.quick_reply
+      ? event.message.quick_reply.payload
+      : event.message.text;
 
     if (messageText) {
       const messageWords = messageText.toLowerCase().split(' ');

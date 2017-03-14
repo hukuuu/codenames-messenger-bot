@@ -105,7 +105,7 @@ red ${result.red} - ${result.blue} blue`;
   CREATE_HELP: `create - create a new room.`,
   LIST_HELP: `list - list all available rooms.`,
   JOIN_HELP: `join <id> - join particular room.`,
-  TEAM_HELP: `team <red/blue> <tell/guess> - take a team ( red or blue ) and a position ( tell or guess ).`,
+  TEAM_HELP: `team - take a team`,
   ROOM_HELP: `room - display room info.`,
   BOARD_HELP: `board - display the board.`,
   LOG_HELP: `log - display the game log.`,

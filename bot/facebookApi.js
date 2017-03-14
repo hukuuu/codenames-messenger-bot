@@ -48,14 +48,33 @@ class FacebookApi {
       {
         "content_type": "text",
         "title": "Red",
-        "payload": "DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_ACTION"
+        "payload": "choose-team red"
       }, {
         "content_type": "text",
         "title": "Blue",
-        "payload": "DEVELOPER_DEFINED_PAYLOAD_FOR_PICKING_ACTION"
+        "payload": "choose-team blue"
+      }, {
+        "content_type": "text",
+        "title": "Observer",
+        "payload": "choose-team observer"
       }
     ];
     return this.api.sendQuickReply(playerId, 'Pick a team:', replies);
+  }
+
+  showPositionMenuMessage(playerId, team) {
+    const replies = [
+      {
+        "content_type": "text",
+        "title": "Tell",
+        "payload": `choose-position ${team}_tell`
+      }, {
+        "content_type": "text",
+        "title": "Guess",
+        "payload": `choose-position ${team}_guess`
+      }
+    ];
+    return this.api.sendQuickReply(playerId, 'Pick a position:', replies);
   }
 
   logErrorMessage(playerId, error) {
@@ -80,8 +99,7 @@ class FacebookApi {
 
   async welcomeToRoomMessage(playerId, room) {
     await this.api.sendTextMessage(playerId, t.WELCOME);
-    await this.api.sendTextMessage(playerId, t.ROOM_INFO(room));
-    return this.api.sendTextMessage(playerId, t.TEAM_HELP);
+    return await this.api.sendTextMessage(playerId, t.ROOM_INFO(room));
   }
 
   youAreNotInARoomMessage(playerId) {
