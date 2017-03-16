@@ -35,12 +35,37 @@ class FacebookApi {
     return this.broadcast(players.filter(p => p.id !== ex.id), f, args);
   }
 
-  broadcastBoard(players, cards) {
+  broadcastBoard(players, game) {
     return Promise.all(players.map(p => {
       return p.isHinter()
-        ? this.api.showBoardHintMessage(p.id, cards)
-        : this.api.showBoardGuessMessage(p.id, cards);
+        ? this.showBoardHintMessage(p.id, game)
+        : this.showBoardGuessMessage(p.id, game);
     }));
+  }
+
+  youNowCanBeInvitedMessage(playerId, can) {
+    return this.api.sendTextMessage(playerId, t.YOU_CAN_BE_INVITED(can));
+  }
+
+  inviteListMessage(playerId, invites) {
+    return this.api.sendTextMessage(playerId, t.INVITE_LIST(invites));
+  }
+
+  invitePlayerMessage(playerId, roomId) {
+    const replies = [{
+        "content_type": "text",
+        "title": "Accept",
+        "payload": `join ${roomId}`
+    }, {
+        "content_type": "text",
+        "title": "Reject",
+        "payload": `invite rejected ${playerId}`
+    }];
+    return this.api.sendQuickReply(playerId, `You are invited to room ${roomId}`, replies);
+  }
+
+  playerRejectedInviteMessage(playerId, rejector) {
+    return this.api.sendTextMessage(playerId, t.PLAYER_REJECTED_INVITE(rejector));
   }
 
   showTeamMenuMessage(playerId) {
@@ -138,7 +163,7 @@ class FacebookApi {
   }
 
   helpNotInRoomMessage(playerId) {
-    let composite = [t.LIST_HELP, t.CREATE_HELP, t.JOIN_HELP, t.NICK_HELP, t.HELP_HELP].join('\n');
+    let composite = [t.LIST_HELP, t.CREATE_HELP, t.JOIN_HELP, t.NICK_HELP, t.INVITE_HELP, t.INVITE_CONFIG_HELP, t.HELP_HELP].join('\n');
     return this.api.sendTextMessage(playerId, composite);
   }
 

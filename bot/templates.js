@@ -91,6 +91,16 @@ red ${result.red} - ${result.blue} blue`;
   PLAYER_JOINED: name => `${name} joined the room`,
   PLAYER_TOOK_SLOT: (name, slot) => `${name} took ${slot}`,
 
+  YOU_CAN_BE_INVITED: can => `You now can${can?'':' not'} be invited!`,
+  INVITE_LIST: invites => {
+    if(invites.length) {
+      let body = invites.map((player, i) => `${i + 1} ${player.getNiceName()}`).join('\n');
+      return body + '\n-----\nInvite by number(s)';
+    }
+    return 'No one to invite.';
+  },
+  PLAYER_REJECTED_INVITE: rejector => `${rejector.getNiceName()} rejected your invite :(`,
+
   UNKNOWN_COMMAND: command => `Unknown command: ${command}`,
 
   GAME_OVER: win => `You ${win
@@ -113,6 +123,8 @@ red ${result.red} - ${result.blue} blue`;
   GUESS_HELP: `guess <word> - guess.`,
   PASS_HELP: `pass - pass`,
   HELP_HELP: `help - show this help.`,
-  NICK_HELP: `nick - choose a short nickname`
+  NICK_HELP: `nick - choose a short nickname`,
+  INVITE_HELP: `invite - invite buddy`,
+  INVITE_CONFIG_HELP: `invite <on/off> - on/off invitations`
 
 };

@@ -28,12 +28,12 @@ class Player {
   }
 
   getTeam() {
-    return this.team ? this.team.toLowerCase() : this.team;
-    // if (!this.position || this.position === 'OBSERVER')
-    //   return null;
-    // return this.position.substring(0, this.position.indexOf('_')).toLowerCase();
+    // return this.team ? this.team.toLowerCase() : this.team;
+    if (!this.position || this.position === 'OBSERVER')
+      return null;
+    return this.position.substring(0, this.position.indexOf('_')).toLowerCase();
   }
 
 }
 
-module.exports = Player;
+  module.exports = Player;
