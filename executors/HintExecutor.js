@@ -8,6 +8,12 @@ class HintExecutor {
     container['hint'] = this;
   }
 
+  validateCount(count) {
+    if(count === 'infinity') return;
+    if(isNaN(parseInt(count)))
+      throw new Error('Hint format:\nhint <word(s)> <count>');
+  }
+
   async execute({api, player, room, params}) {
 
     validateRoomExists(room);
@@ -18,6 +24,9 @@ class HintExecutor {
 
     const word = params.slice(1, params.length - 1).join(' ');
     const count = params[params.length - 1];
+
+    this.validateCount(count);
+
     const hint = {
       value: word,
       count: count > 9
