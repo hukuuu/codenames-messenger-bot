@@ -51,7 +51,7 @@ class FacebookApi {
     return this.api.sendTextMessage(playerId, t.INVITE_LIST(invites));
   }
 
-  invitePlayerMessage(playerId, roomId) {
+  invitePlayerMessage(playerId, fromId, roomId) {
     const replies = [{
         "content_type": "text",
         "title": "Accept",
@@ -59,7 +59,7 @@ class FacebookApi {
     }, {
         "content_type": "text",
         "title": "Reject",
-        "payload": `invite rejected ${playerId}`
+        "payload": `invite rejected ${playerId} ${fromId}`
     }];
     return this.api.sendQuickReply(playerId, `You are invited to room ${roomId}`, replies);
   }
