@@ -16,10 +16,7 @@ const PassExecutor = require('../executors/PassExecutor');
 const HelpExecutor = require('../executors/HelpExecutor');
 const NickExecutor = require('../executors/NickExecutor');
 const InviteExecutor = require('../executors/InviteExecutor');
-
-const ShowTeamMenuExecutor = require('../executors/team/ShowTeamMenuExecutor');
-const ChooseTeamExecutor = require('../executors/team/ChooseTeamExecutor');
-const ChoosePositionExecutor = require('../executors/team/ChoosePositionExecutor');
+const PickTeamExecutor = require('../executors/PickTeamExecutor');
 
 class MessageHandler {
 
@@ -33,7 +30,7 @@ class MessageHandler {
     new CreateRoomExecutor(this.container);
     new ListRoomsExecutor(this.container);
     new JoinRoomExecutor(this.container);
-    // new JoinTeamExecutor(this.container);
+    new PickTeamExecutor(this.container);
     new ShowRoomInfoExecutor(this.container);
     new ShowBoardExecutor(this.container);
     new ShowLogExecutor(this.container);
@@ -43,10 +40,6 @@ class MessageHandler {
     new HelpExecutor(this.container);
     new NickExecutor(this.container);
     new InviteExecutor(this.container);
-
-    new ShowTeamMenuExecutor(this.container);
-    new ChooseTeamExecutor(this.container);
-    new ChoosePositionExecutor(this.container);
 
   }
 
