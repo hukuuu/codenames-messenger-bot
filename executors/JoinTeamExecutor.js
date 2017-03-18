@@ -19,9 +19,9 @@ class JoinTeamExecutor {
       await api.okMessage(player.id);
       await api.broadcastExcept(room.players, player, api.playerTookSlotMessage.bind(api), [player, position]);
       if (room.isReady()) {
-        await broadcast(room.players, api.roomIsReadyMessage.bind(api), []);
-        await broadcastBoard(room.players, room.game);
-        await broadcast(room.players, api.turnChangedMessage.bind(api), [room.findPlayerInTurn()]);
+        await api.broadcast(room.players, api.roomIsReadyMessage.bind(api), []);
+        await api.broadcastBoard(room.players, room.game);
+        await api.broadcast(room.players, api.turnChangedMessage.bind(api), [room.findPlayerInTurn()]);
       }
       return;
     }

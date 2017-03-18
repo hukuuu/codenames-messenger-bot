@@ -9,6 +9,15 @@ class Room {
     this.players = [];
   }
 
+  newGame() {
+    this.game = new Game(generate());
+    this.players.forEach(p => {
+      p.position = p.isHinter()
+        ? p.position.replace('TELL','GUESS')
+        : p.position.replace('GUESS', 'TELL');
+    });
+  }
+
   findPlayer(id) {
     return this.players.filter(player => player.id == id)[0];
   }

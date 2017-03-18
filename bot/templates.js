@@ -43,7 +43,7 @@ module.exports = {
 
 red ${result.red} - ${result.blue} blue`;
   },
-  BOARD_GUESS: (cards,result) => `***BOARD***\n${cards.filter(c => !c.revealed).map(c => c.text).join(', ')}
+  BOARD_GUESS: (cards, result) => `***BOARD***\n${cards.filter(c => !c.revealed).map(c => c.text).join(', ')}
 --------------\nred ${result.red} - ${result.blue} blue`,
 
   PLAYER_HINTED: (name, hint) => {
@@ -91,9 +91,11 @@ red ${result.red} - ${result.blue} blue`;
   PLAYER_JOINED: name => `${name} joined the room`,
   PLAYER_TOOK_SLOT: (name, slot) => `${name} took ${slot}`,
 
-  YOU_CAN_BE_INVITED: can => `You now can${can?'':' not'} be invited!`,
+  YOU_CAN_BE_INVITED: can => `You now can${can
+    ? ''
+    : ' not'} be invited!`,
   INVITE_LIST: invites => {
-    if(invites.length) {
+    if (invites.length) {
       let body = invites.map((player, i) => `${i + 1} ${player.getNiceName()}`).join('\n');
       return body + '\n-----\nInvite by number(s)';
     }
@@ -115,6 +117,9 @@ red ${result.red} - ${result.blue} blue`;
   GAME_OVER: win => `You ${win
     ? 'won ;)'
     : 'lost ;('}`,
+
+  NEW_GAME_STARTED: `All agreed, starting a new game!`,
+  KIL_ROOM: who => `${who.getNiceName()} doesn't want to play more :(\nKilling room...`,
 
   MORE_WORDS: more => `${more - 1} (+1) more to guess.`,
 

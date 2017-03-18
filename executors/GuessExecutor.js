@@ -23,7 +23,7 @@ class GuessExecutor {
     await api.broadcast(room.players, api.playerGuessedMessage.bind(api), [player.getNiceName(), card]);
 
     if (room.game.winner) {
-      await Promise.all(room.players.map(p => {
+      return await Promise.all(room.players.map(p => {
         let win = p.position.toLowerCase().indexOf(room.game.winner.toLowerCase()) > -1;
         return api.gameOverMessage(p.id, win);
       }));

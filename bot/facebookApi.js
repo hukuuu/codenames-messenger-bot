@@ -203,7 +203,26 @@ class FacebookApi {
   }
 
   gameOverMessage(playerId, win) {
-    return this.api.sendTextMessage(playerId, t.GAME_OVER(win));
+    let message = t.GAME_OVER(win) +
+      '\n----\nOne more game?';
+
+    let replies = [{
+        "content_type": "text",
+        "title": "Accept",
+        "payload": `newgame ok`
+      }, {
+        "content_type": "text",
+        "title": "Reject",
+        "payload": `newgame no`
+      }];
+
+    return this.api.sendQuickReply(playerId, message, replies);
+  }
+  playerDoesntWantToPlayMore(playerId, who) {
+    return this.api.sendTextMessage(playerId, t.KIL_ROOM(who));
+  }
+  newGameStarted(playerId) {
+    return this.api.sendTextMessage(playerId, t.NEW_GAME_STARTED);
   }
 
   moreWordsMessage(playerId, more) {

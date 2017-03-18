@@ -17,6 +17,7 @@ const HelpExecutor = require('../executors/HelpExecutor');
 const NickExecutor = require('../executors/NickExecutor');
 const InviteExecutor = require('../executors/InviteExecutor');
 const PickTeamExecutor = require('../executors/PickTeamExecutor');
+const NewGameExecutor = require('../executors/NewGameExecutor');
 
 class MessageHandler {
 
@@ -40,7 +41,7 @@ class MessageHandler {
     new HelpExecutor(this.container);
     new NickExecutor(this.container);
     new InviteExecutor(this.container);
-
+    new NewGameExecutor(this.container);
   }
 
   async handleMessage(event) {

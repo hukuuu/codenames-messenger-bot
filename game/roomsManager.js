@@ -2,11 +2,7 @@ var Room = require('./room');
 var Player = require('./player');
 
 // var testRoom = new Room(0);
-// var testPlayer = new Player(1416486275063521, 'Николай', 0, 'RED_TELL')
-// testRoom.join(testPlayer);
-// testRoom.takePosition(testPlayer, 'RED_TELL');
-// testRoom.game.redTell(testPlayer, {value: 'traktor', count: '4'});
-// testRoom.takePosition(testPlayer, 'RED_GUESS');
+// testRoom.game.winner = 'red';
 
 class RoomsManager {
   constructor() {
@@ -35,6 +31,10 @@ class RoomsManager {
         r.leave(player);
       }
     );
+  }
+
+  killRoom(id) {
+    this.rooms = this.rooms.filter(r => r.id != id);
   }
 
 }
