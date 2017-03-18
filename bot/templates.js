@@ -2,7 +2,9 @@ const icons = {
   red: '\uD83D\uDD34',
   blue: '\uD83D\uDD35',
   neutral: '\u25EF',
-  assassin: '\uD83D\uDCA3'
+  assassin: '\uD83D\uDCA3',
+  arrow: '\u2794',
+  check: '\u2714'
 };
 
 module.exports = {
@@ -58,27 +60,24 @@ red ${result.red} - ${result.blue} blue`;
 
     let body = log.map(logItem => {
       let name = logItem.player.getNiceName();
-      let card = '';
+      let team = logItem.player.getTeam();
 
-      if (logItem.card)
-        card = logItem.card.text + ' ' + (logItem.success
-          ? '\u2714'
-          : '\u2718');
+      if (logItem.action === 'hint') {
+        let i = icons[team];
+        let t = logItem.hint.value + ' ' + logItem.hint.count;
+        return `${i} ${name} ${icons.arrow} ${t} ${i}`;
+      }
 
-      let team = logItem.player.position.substring(0, logItem.player.position.indexOf('_')).toLowerCase();
+      if (logItem.action === 'guess') {
+        let i = icons[logItem.card.type];
+        let t = logItem.card.text;
+        return `${i} ${name} ${icons.arrow} ${t}`;
+      }
 
-      let hint = logItem.hint
-        ? `${icons[team]} ${logItem.hint.value} ${logItem.hint.count}`
-        : '';
-
-      if (logItem.card)
-        card = `${logItem.card.text} ${icons[logItem.card.type]}`;
-
-      let action = logItem.action === 'pass'
-        ? '\u2714'
-        : '\u2794';
-
-      return `${name} ${action} ${card} ${hint}`
+      if (logItem.action === 'pass') {
+        return `${icons.check}   ${name}`;
+      }
+      return '';
     })
 
     return head + body.join('\n');
