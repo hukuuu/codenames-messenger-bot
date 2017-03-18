@@ -36,22 +36,27 @@ class InviteExecutor {
       return api.playerRejectedInviteMessage(params[3], rejector);
     }
 
+    let invitedPlayers = [];
+
     validatePlayerHasRoom(player);
     validateRoomExists(room);
     let numbers = params.slice(1);
-    let invites = numbers.map(number => {
-      let i = playersManager.findInvite(number);
-      console.log(number, i);
-      return i;
-    }).filter(a => !!a). // NOTE: remove nulls
+    let invites = numbers
+      .map(playersManager.findInvite.bind(playersManager))
+      .filter(a => !!a). // NOTE: remove nulls
     map(invite => {
       console.log(invite);
-      let promise = playersManager.findPlayer(invite).then(p => api.invitePlayerMessage(p.id, player.id, room.id))
-
-      return promise;
+      return playersManager
+        .findPlayer(invite)
+        .then(p => {
+          invitedPlayers.push(p);
+          return api.invitePlayerMessage(p.id, player.id, room.id)
+        })
     });
 
-    return await Promise.all(invites);
+    return await Promise.all(invites).then(_ => {
+      return api.playersInvited(player.id, invitedPlayers);
+    });
   }
 }
 

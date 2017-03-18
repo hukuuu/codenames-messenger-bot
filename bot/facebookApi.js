@@ -64,6 +64,10 @@ class FacebookApi {
     return this.api.sendQuickReply(playerId, `You are invited to room ${roomId}`, replies);
   }
 
+  playersInvited(playerId, invitedPlayers) {
+    return this.api.sendTextMessage(playerId, t.INVITED_PLAYERS(invitedPlayers));
+  }
+
   playerRejectedInviteMessage(playerId, rejector) {
     return this.api.sendTextMessage(playerId, t.PLAYER_REJECTED_INVITE(rejector));
   }

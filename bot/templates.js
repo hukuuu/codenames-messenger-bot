@@ -99,6 +99,15 @@ red ${result.red} - ${result.blue} blue`;
     }
     return 'No one to invite.';
   },
+
+  INVITED_PLAYERS: players => {
+    let name = player => player.getNiceName();
+    let plrs = players.length > 1
+      ? players.slice(0, players.length - 1).map(name).join(', ') + ` and ${players[players.length - 1].getNiceName()}`
+      : players[0].getNiceName();
+    return `${plrs} invited.`
+  },
+
   PLAYER_REJECTED_INVITE: rejector => `${rejector.getNiceName()} rejected your invite :(`,
 
   UNKNOWN_COMMAND: command => `Unknown command: ${command}`,
