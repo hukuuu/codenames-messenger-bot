@@ -16,12 +16,11 @@ class NewGame {
       return;
     }
 
-    if (room.newGameVotes === 2) { // TODO: 4
+    if (room.newGameVotes === 4) {
       room.newGameVotes = 0; //reset the votes for further use :D
       room.newGame();
 
       await api.broadcast(room.players, api.newGameStarted.bind(api), []);
-
       await api.broadcastBoard(room.players, room.game);
       await api.broadcast(room.players, api.turnChangedMessage.bind(api), [room.findPlayerInTurn()]);
       return;
