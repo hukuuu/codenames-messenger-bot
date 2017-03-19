@@ -3,6 +3,7 @@ const validateRoomExists = require('../validators/roomExists');
 class InviteExecutor {
 
   constructor(container) {
+    container['i'] = this;
     container['invite'] = this;
   }
 

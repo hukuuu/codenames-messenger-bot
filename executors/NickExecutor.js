@@ -5,6 +5,7 @@ const validatePlayerIsInTurn = require('../validators/playerIsInTurn');
 
 class NickExecutor {
   constructor(container) {
+    container['n'] = this;
     container['nick'] = this;
   }
 

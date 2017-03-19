@@ -6,7 +6,6 @@ const gp = require('../game/gamePositions');
 const CreateRoomExecutor = require('../executors/CreateRoomExecutor');
 const ListRoomsExecutor = require('../executors/ListRoomsExecutor');
 const JoinRoomExecutor = require('../executors/JoinRoomExecutor');
-const JoinTeamExecutor = require('../executors/JoinTeamExecutor');
 const ShowRoomInfoExecutor = require('../executors/ShowRoomInfoExecutor');
 const ShowBoardExecutor = require('../executors/ShowBoardExecutor');
 const ShowLogExecutor = require('../executors/ShowLogExecutor');

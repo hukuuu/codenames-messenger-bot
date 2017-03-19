@@ -1,6 +1,7 @@
 class ListRoomsExecutor {
 
   constructor(container) {
+    container['ls'] = this;
     container['list'] = this;
   }
 

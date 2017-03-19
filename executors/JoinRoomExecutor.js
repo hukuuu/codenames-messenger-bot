@@ -2,6 +2,7 @@ const validateRoomExists = require('../validators/roomExists');
 
 class JoinRoomExecutor {
   constructor(container) {
+    container['j'] = this;
     container['join'] = this;
   }
 

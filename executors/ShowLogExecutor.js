@@ -4,6 +4,7 @@ const validateRoomExists = require('../validators/roomExists');
 class ShowLogExecutor {
 
   constructor(container) {
+    container['l'] = this;
     container['log'] = this;
   }
 

@@ -1,6 +1,7 @@
 class CreateRoomExecutor {
 
   constructor(container) {
+    container['c'] = this;
     container['create'] = this;
   }
 

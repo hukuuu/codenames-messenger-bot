@@ -5,6 +5,7 @@ const validatePlayerIsInTurn = require('../validators/playerIsInTurn');
 
 class HintExecutor {
   constructor(container) {
+    container['h'] = this;
     container['hint'] = this;
   }
 

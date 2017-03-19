@@ -5,6 +5,7 @@ const validatePlayerIsInTurn = require('../validators/playerIsInTurn');
 
 class GuessExecutor {
   constructor(container) {
+    container['g'] = this;
     container['guess'] = this;
   }
 

@@ -4,6 +4,7 @@ const validateRoomExists = require('../validators/roomExists');
 class PickTeamExecutor {
 
   constructor(container) {
+    container['t'] = this;
     container['team'] = this;
     container['choose-team'] = this;
     container['choose-position'] = this;

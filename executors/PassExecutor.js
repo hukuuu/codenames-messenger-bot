@@ -5,6 +5,7 @@ const validatePlayerIsInTurn = require('../validators/playerIsInTurn');
 
 class PassExecutor {
   constructor(container) {
+    container['p'] = this;
     container['pass'] = this;
   }
 

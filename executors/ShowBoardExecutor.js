@@ -4,6 +4,7 @@ const validateRoomExists = require('../validators/roomExists');
 class ShowBoardExecutor {
 
   constructor(container) {
+    container['b'] = this;
     container['board'] = this;
   }
 
