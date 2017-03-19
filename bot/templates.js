@@ -29,12 +29,8 @@ module.exports = {
   },
 
   BOARD_HINT: (cards, result) => {
-    const t = {};
-    cards.filter(c => !c.revealed).forEach(c => {
-      t[c.type] = t[c.type]
-        ? t[c.type].concat(c.text)
-        : [c.text];
-    })
+    const t = {red:[],blue:[],neutral:[],assassin:[]};
+    cards.filter(c => !c.revealed).forEach(c => t[c.type].push(c.text) );
     return `***ASSASSIN***\n${t.assassin.join('')}
 
 ***NEUTRAL***\n${t.neutral.join(', ')}
