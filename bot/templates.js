@@ -125,19 +125,19 @@ red ${result.red} - ${result.blue} blue`;
   WELCOME: `***WELCOME***`,
   ROOM_IS_READY: `Ok, all set up, lets start the game.`,
 
-  CREATE_HELP: `c|create - create a new room.`,
-  LIST_HELP: `ls|list - list all available rooms.`,
-  JOIN_HELP: `j|join <id> - join particular room.`,
-  TEAM_HELP: `t|team - take a team`,
-  ROOM_HELP: `r|room - display room info.`,
-  BOARD_HELP: `b|board - display the board.`,
-  LOG_HELP: `l|log - display the game log.`,
-  HINT_HELP: `h|hint <word> <number> - hint.`,
-  GUESS_HELP: `g|guess <word> - guess.`,
-  PASS_HELP: `p|pass - pass`,
+  CREATE_HELP: `c,create - create a new room.`,
+  LIST_HELP: `ls,list - list all available rooms.`,
+  JOIN_HELP: `j,join <id> - join particular room.`,
+  TEAM_HELP: `t,team - take a team`,
+  ROOM_HELP: `r,room - display room info.`,
+  BOARD_HELP: `b,board - display the board.`,
+  LOG_HELP: `l,log - display the game log.`,
+  HINT_HELP: `h,hint <word> <number> - hint.`,
+  GUESS_HELP: `g,guess <word> - guess.`,
+  PASS_HELP: `p,pass - pass`,
   HELP_HELP: `help - show this help.`,
-  NICK_HELP: `n|nick - choose a short nickname`,
-  INVITE_HELP: `i|invite - invite buddy`,
-  INVITE_CONFIG_HELP: `i|invite <on/off> - on/off invitations`
+  NICK_HELP: `n,nick - choose a short nickname`,
+  INVITE_HELP: `i,invite - invite buddy`,
+  INVITE_CONFIG_HELP: `i,invite <on/off> - on/off invitations`
 
 };
