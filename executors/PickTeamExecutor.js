@@ -16,7 +16,7 @@ class PickTeamExecutor {
 
     let command = params[0];
 
-    if (command === 'team') {
+    if (command === 'team' || command === 't') {
       return api.showTeamMenuMessage(player.id);
     }
 
