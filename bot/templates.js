@@ -7,6 +7,14 @@ const icons = {
   check: '\u2714'
 };
 
+const positions = {
+  RED_TELL: 'Red Tell',
+  BLUE_TELL: 'Blue Tell',
+  RED_GUESS: 'Red Guess',
+  BLUE_GUESS: 'Blue Guess',
+  OBSERVER: 'Observer'
+}
+
 module.exports = {
 
   ROOM_CREATED: roomID => `Room "${roomID}" created.`,
@@ -24,8 +32,8 @@ module.exports = {
   POSITION_IS_BUSY: () => `Position is busy`,
 
   ROOM_INFO: (room) => {
-    let playersInfo = room.players.map(player => `${player.getNiceName()} - ${player.position}`).join('\n')
-    return `Room ${room.id}\n${playersInfo}`
+    let playersInfo = room.players.map(player => `${player.getNiceName()} - ${positions[player.position]}`).join('\n')
+    return `Room ${room.id}\n----\n${playersInfo}`
   },
 
   REVEALED_BOARD: (cards) => {
@@ -125,14 +133,12 @@ red ${result.red} - ${result.blue} blue`;
     ? 'won ;)'
     : 'lost ;('}`,
 
-  NEW_GAME_STARTED: `All agreed, starting a new game!`,
   KIL_ROOM: who => `${who.getNiceName()} doesn't want to play more :(\nKilling room...`,
 
   MORE_WORDS: more => `${more - 1} (+1) more to guess.`,
 
-  WELCOME: `***WELCOME***`,
+  NEW_GAME_STARTED: `All agreed, starting a new game!`,
   ROOM_IS_READY: `Ok, all set up, lets start the game.`,
-
   CREATE_HELP: `c,create - create a new room.`,
   LIST_HELP: `ls,list - list all available rooms.`,
   JOIN_HELP: `j,join <id> - join particular room.`,

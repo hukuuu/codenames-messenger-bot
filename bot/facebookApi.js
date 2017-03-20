@@ -127,7 +127,6 @@ class FacebookApi {
   }
 
   async welcomeToRoomMessage(playerId, room) {
-    await this.api.sendTextMessage(playerId, t.WELCOME);
     return await this.api.sendTextMessage(playerId, t.ROOM_INFO(room));
   }
 
