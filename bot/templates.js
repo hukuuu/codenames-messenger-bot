@@ -28,6 +28,18 @@ module.exports = {
     return `Room ${room.id}\n${playersInfo}`
   },
 
+  REVEALED_BOARD: (cards) => {
+    const t = {red:[],blue:[],neutral:[],assassin:[]};
+    cards.forEach(c => t[c.type].push(c.text) );
+    return `***ASSASSIN***\n${t.assassin.join('')}
+
+***NEUTRAL***\n${t.neutral.join(', ')}
+
+***RED***\n${t.red.join(', ')}
+
+***BLUE***\n${t.blue.join(', ')}`
+  },
+
   BOARD_HINT: (cards, result) => {
     const t = {red:[],blue:[],neutral:[],assassin:[]};
     cards.filter(c => !c.revealed).forEach(c => t[c.type].push(c.text) );

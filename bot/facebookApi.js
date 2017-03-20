@@ -202,9 +202,13 @@ class FacebookApi {
     return this.api.sendTextMessage(playerId, t.ROOM_IS_READY);
   }
 
-  gameOverMessage(playerId, win) {
-    let message = t.GAME_OVER(win) +
-      '\n----\nOne more game?';
+  gameOverMessage(player, game, win) {
+    let message = t.GAME_OVER(win);
+
+    if(!player.isHinter())
+      message += '\n----\nBoard:\n\n' + t.REVEALED_BOARD(game.cards);
+
+    message += '\n----\n\nOne more game?';
 
     let replies = [{
         "content_type": "text",
@@ -216,7 +220,7 @@ class FacebookApi {
         "payload": `newgame no`
       }];
 
-    return this.api.sendQuickReply(playerId, message, replies);
+    return this.api.sendQuickReply(player.id, message, replies);
   }
   playerDoesntWantToPlayMore(playerId, who) {
     return this.api.sendTextMessage(playerId, t.KIL_ROOM(who));

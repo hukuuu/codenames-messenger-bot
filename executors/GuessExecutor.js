@@ -26,7 +26,7 @@ class GuessExecutor {
     if (room.game.winner) {
       return await Promise.all(room.players.map(p => {
         let win = p.position.toLowerCase().indexOf(room.game.winner.toLowerCase()) > -1;
-        return api.gameOverMessage(p.id, win);
+        return api.gameOverMessage(p, room.game, win);
       }));
     } else if (room.game.isTurnChanged() && room.findPlayerInTurn()) {
       await api.broadcast(room.players, api.turnChangedMessage.bind(api), [room.findPlayerInTurn()]);
