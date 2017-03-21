@@ -38,7 +38,7 @@ module.exports = {
 
   REVEALED_BOARD: (cards) => {
     const t = {red:[],blue:[],neutral:[],assassin:[]};
-    cards.forEach(c => t[c.type].push(c.text) );
+    cards.forEach(c => t[c.type].push(c.text.toUpperCase()) );
     return `***ASSASSIN***\n${t.assassin.join('')}
 
 ***NEUTRAL***\n${t.neutral.join(', ')}
@@ -50,7 +50,7 @@ module.exports = {
 
   BOARD_HINT: (cards, result) => {
     const t = {red:[],blue:[],neutral:[],assassin:[]};
-    cards.filter(c => !c.revealed).forEach(c => t[c.type].push(c.text) );
+    cards.filter(c => !c.revealed).forEach(c => t[c.type].push(c.text.toUpperCase()) );
     return `***ASSASSIN***\n${t.assassin.join('')}
 
 ***NEUTRAL***\n${t.neutral.join(', ')}
@@ -61,7 +61,7 @@ module.exports = {
 
 red ${result.red} - ${result.blue} blue`;
   },
-  BOARD_GUESS: (cards, result) => `***BOARD***\n${cards.filter(c => !c.revealed).map(c => c.text).join(', ')}
+  BOARD_GUESS: (cards, result) => `***BOARD***\n${cards.filter(c => !c.revealed).map(c => c.text.toUpperCase()).join(', ')}
 --------------\nred ${result.red} - ${result.blue} blue`,
 
   PLAYER_HINTED: (name, hint) => {
@@ -81,12 +81,12 @@ red ${result.red} - ${result.blue} blue`;
       if (logItem.action === 'hint') {
         let i = icons[team];
         let t = logItem.hint.value + ' ' + logItem.hint.count;
-        return `${i} ${name} ${icons.arrow} ${t} ${i}`;
+        return `----\n${i} ${name} ${icons.arrow} ${t}`;
       }
 
       if (logItem.action === 'guess') {
         let i = icons[logItem.card.type];
-        let t = logItem.card.text;
+        let t = logItem.card.text.toUpperCase();
         return `${i} ${name} ${icons.arrow} ${t}`;
       }
 
@@ -99,7 +99,7 @@ red ${result.red} - ${result.blue} blue`;
     return head + body.join('\n');
   },
 
-  PLAYER_GUESSED: (name, card) => `***GUESS***\n${name}: ${card.text} ${icons[card.type]}`,
+  PLAYER_GUESSED: (name, card) => `***GUESS***\n${name}: ${card.text.toUpperCase()} ${icons[card.type]}`,
   PLAYER_PASSED: name => `***PASS***\n${name} passed.`,
 
   TURN_CHANGED: name => `${name}'s turn.`,
@@ -139,19 +139,19 @@ red ${result.red} - ${result.blue} blue`;
 
   NEW_GAME_STARTED: `All agreed, starting a new game!`,
   ROOM_IS_READY: `Ok, all set up, lets start the game.`,
-  CREATE_HELP: `c,create - create a new room.`,
-  LIST_HELP: `ls,list - list all available rooms.`,
-  JOIN_HELP: `j,join <id> - join particular room.`,
-  TEAM_HELP: `t,team - take a team`,
-  ROOM_HELP: `r,room - display room info.`,
-  BOARD_HELP: `b,board - display the board.`,
-  LOG_HELP: `l,log - display the game log.`,
-  HINT_HELP: `h,hint <word> <number> - hint.`,
-  GUESS_HELP: `g,guess <word> - guess.`,
-  PASS_HELP: `p,pass - pass`,
+  CREATE_HELP: `c - create a new room.`,
+  LIST_HELP: `ls - list all available rooms.`,
+  JOIN_HELP: `j (id) - join particular room.`,
+  TEAM_HELP: `t - take a team`,
+  ROOM_HELP: `r - display room info.`,
+  BOARD_HELP: `b - display the board.`,
+  LOG_HELP: `l - display the game log.`,
+  HINT_HELP: `h (word) (number) - hint.`,
+  GUESS_HELP: `g (word) - guess.`,
+  PASS_HELP: `p - pass`,
   HELP_HELP: `help - show this help.`,
-  NICK_HELP: `n,nick - choose a short nickname`,
-  INVITE_HELP: `i,invite - invite buddy`,
-  INVITE_CONFIG_HELP: `i,invite <on/off> - on/off invitations`
+  NICK_HELP: `n - choose a short nickname`,
+  INVITE_HELP: `i - invite buddy`,
+  INVITE_CONFIG_HELP: `i (on|off) - on/off invitations`
 
 };
