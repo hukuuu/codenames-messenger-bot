@@ -22,7 +22,7 @@ module.exports = {
   LIST_ROOMS: (roomIds) => {
     return roomIds.length
       ? `Available rooms:\n${roomIds.join(' ')}.\n(type "join <room>")`
-      : `No rooms available. Why don't you create one? (type "create")`;
+      : `No rooms. Why don't you create one? (type "c or create")`;
   },
 
   ROOM_DOES_NOT_EXIST: roomID => `Room ${roomID} does not exist.`,
