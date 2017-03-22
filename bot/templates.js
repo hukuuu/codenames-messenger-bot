@@ -59,7 +59,7 @@ module.exports = {
 
 ***BLUE***\n${t.blue.join(', ')}
 
-red ${result.red} - ${result.blue} blue`;
+--------------\nred ${result.red} - ${result.blue} blue`;
   },
   BOARD_GUESS: (cards, result) => `***BOARD***\n${cards.filter(c => !c.revealed).map(c => c.text.toUpperCase()).join(', ')}
 --------------\nred ${result.red} - ${result.blue} blue`,
@@ -68,7 +68,7 @@ red ${result.red} - ${result.blue} blue`;
     const count = hint.count === 'infinity'
       ? '\u221E'
       : hint.count;
-    return `***HINT***\n${name}: ${hint.value} - ${count}`
+    return `${name}: ${hint.value} - ${count}`
   },
 
   LOG: log => {
@@ -99,8 +99,8 @@ red ${result.red} - ${result.blue} blue`;
     return head + body.join('\n');
   },
 
-  PLAYER_GUESSED: (name, card) => `***GUESS***\n${name}: ${card.text.toUpperCase()} ${icons[card.type]}`,
-  PLAYER_PASSED: name => `***PASS***\n${name} passed.`,
+  PLAYER_GUESSED: (name, card) => `${name}: ${card.text.toUpperCase()} ${icons[card.type]}`,
+  PLAYER_PASSED: name => `${name} passed.`,
 
   TURN_CHANGED: name => `${name}'s turn.`,
   PLAYER_JOINED: name => `${name} joined the room`,
