@@ -1,4 +1,4 @@
-var LowLevelApi = require('./LowLevelApi');
+var LowLevelApi = require('./lowLevelApi');
 var t = require('./templates');
 
 class FacebookApi {
