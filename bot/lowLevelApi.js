@@ -131,10 +131,8 @@ class LowLevelApi {
     };
 
 
-    const sleep = ms => new Promise(r => setTimeout(r, ms));
-
-    const ms = 1500 + messageText.length * 3;
-
+    // const sleep = ms => new Promise(r => setTimeout(r, ms));
+    // const ms = 1500 + messageText.length * 3;
     // await this.sendTypingOn(recipientId);
     // console.log('delay', ms, 'ms');
     // await sleep(ms);
@@ -456,7 +454,7 @@ class LowLevelApi {
           console.log("Successfully called Send API for recipient %s", recipientId);
         }
       } else {
-        console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error);
+        console.error("Failed calling Send API", error, response, body);
       }
     });
   }
