@@ -288,6 +288,10 @@ class FacebookApi {
   moreWordsMessage(playerId, more) {
     return this.api.sendTextMessage(playerId, t.MORE_WORDS(more))
   }
+
+  scoreMessage(playerId, score) {
+    return this.api.sendTextMessage(playerId, score)
+  }
 }
 
 module.exports = FacebookApi

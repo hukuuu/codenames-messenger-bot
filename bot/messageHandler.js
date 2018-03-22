@@ -17,6 +17,9 @@ const NickExecutor = require('../executors/NickExecutor')
 const InviteExecutor = require('../executors/InviteExecutor')
 const PickTeamExecutor = require('../executors/PickTeamExecutor')
 const NewGameExecutor = require('../executors/NewGameExecutor')
+const SeeScoreExecutor = require('../executors/SeeScoreExecutor')
+
+const log = require('../middlewares/log')
 
 class MessageHandler {
   constructor(pageAccessToken) {
@@ -39,6 +42,7 @@ class MessageHandler {
     new NickExecutor(this.container)
     new InviteExecutor(this.container)
     new NewGameExecutor(this.container)
+    new SeeScoreExecutor(this.container)
   }
 
   async handleMessage(event) {
@@ -51,8 +55,10 @@ class MessageHandler {
   }
 
   async _handleMessage(event) {
-    const player = await this.playersManager.findPlayer(event.sender.id)
-    const room = this.roomsManager.findRoom(player.roomId)
+    const { playersManager, roomsManager, api } = this
+
+    const player = await playersManager.findPlayer(event.sender.id)
+    const room = roomsManager.findRoom(player.roomId)
 
     const messageText = event.message.quick_reply
       ? event.message.quick_reply.payload
@@ -65,17 +71,22 @@ class MessageHandler {
       const executor = this.container[command]
 
       if (!executor) {
-        return this.api.unknownCommandMessage(player.id, command)
+        return api.unknownCommandMessage(player.id, command)
       }
 
-      return await executor.execute({
-        api: this.api,
-        roomsManager: this.roomsManager,
-        playersManager: this.playersManager,
-        room: room,
-        player: player,
-        params: messageWords
-      })
+      const context = {
+        api,
+        command,
+        params: messageWords,
+        player,
+        playersManager,
+        room,
+        roomsManager
+      }
+      console.log(context)
+
+      await executor.execute(context)
+      await log(context)
     }
     return
   }
