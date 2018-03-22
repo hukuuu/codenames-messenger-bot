@@ -4,4 +4,4 @@ module.exports = {
   RED_GUESS: 'RED_GUESS',
   BLUE_GUESS: 'BLUE_GUESS',
   OBSERVER: 'OBSERVER'
-};
+}

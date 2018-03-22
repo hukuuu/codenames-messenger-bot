@@ -1,55 +1,54 @@
-var generate = require('./cardsGenerator');
-var Game = require('./game');
-var gp = require('./gamePositions');
+var generate = require('./cardsGenerator')
+var Game = require('./game')
+var gp = require('./gamePositions')
 
 class Room {
   constructor(id) {
-    this.id = id;
-    this.game = new Game(generate());
-    this.players = [];
+    this.id = id
+    this.game = new Game(generate())
+    this.players = []
   }
 
   newGame() {
-    this.game = new Game(generate());
+    this.game = new Game(generate())
     this.players.forEach(p => {
       p.position = p.isHinter()
-        ? p.position.replace('TELL','GUESS')
-        : p.position.replace('GUESS', 'TELL');
-    });
+        ? p.position.replace('TELL', 'GUESS')
+        : p.position.replace('GUESS', 'TELL')
+    })
   }
 
   findPlayer(id) {
-    return this.players.filter(player => player.id == id)[0];
+    return this.players.filter(player => player.id == id)[0]
   }
 
   findPlayerInTurn() {
-    return this.players.filter(p => p.position === this.game.turn)[0];
+    return this.players.filter(p => p.position === this.game.turn)[0]
   }
 
   join(player) {
-    var p = this.findPlayer(player.id);
+    var p = this.findPlayer(player.id)
     if (!p) {
-      player.roomId = this.id;
-      this.players.push(player);
-      player.position = gp.OBSERVER;
+      player.roomId = this.id
+      this.players.push(player)
+      player.position = gp.OBSERVER
     }
   }
 
   leave(player) {
-    this.players = this.players.filter(p => p.id !== player.id);
+    this.players = this.players.filter(p => p.id !== player.id)
   }
 
   isReady() {
-    return this.findAvailablePositions().length === 0;
+    return this.findAvailablePositions().length === 0
   }
 
   findAvailablePositions() {
-    var availablePositions = [];
+    var availablePositions = []
     var takenPositions = this.players.reduce((acc, p) => {
-      if (p.position)
-        return acc.concat(p.position);
-      else return acc;
-      }, []);
+      if (p.position) return acc.concat(p.position)
+      else return acc
+    }, [])
 
     if (!takenPositions.includes(gp.RED_TELL))
       availablePositions.push(gp.RED_TELL)
@@ -60,23 +59,21 @@ class Room {
     if (!takenPositions.includes(gp.BLUE_GUESS))
       availablePositions.push(gp.BLUE_GUESS)
 
-    return availablePositions;
+    return availablePositions
   }
 
   takePosition(player, position) {
-
-    if(position.toLowerCase().indexOf('observer') > -1) {
-      player.position = gp.OBSERVER;
-      return true;
+    if (position.toLowerCase().indexOf('observer') > -1) {
+      player.position = gp.OBSERVER
+      return true
     }
 
-    var availablePositions = this.findAvailablePositions();
-    if (!availablePositions.includes(position))
-      return false;
+    var availablePositions = this.findAvailablePositions()
+    if (!availablePositions.includes(position)) return false
 
-    player.position = position;
-    return true;
+    player.position = position
+    return true
   }
 }
 
-module.exports = Room;
+module.exports = Room

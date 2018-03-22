@@ -1,8 +1,8 @@
-var request = require('request-promise');
+var request = require('request-promise')
 
 class LowLevelApi {
   constructor(pageAccessToken) {
-    this.pageAccessToken = pageAccessToken;
+    this.pageAccessToken = pageAccessToken
   }
 
   /*
@@ -16,15 +16,15 @@ class LowLevelApi {
       },
       message: {
         attachment: {
-          type: "image",
+          type: 'image',
           payload: {
-            url: SERVER_URL + "/assets/rift.png"
+            url: SERVER_URL + '/assets/rift.png'
           }
         }
       }
-    };
+    }
 
-    this.callSendAPI(messageData);
+    this.callSendAPI(messageData)
   }
 
   /*
@@ -38,15 +38,15 @@ class LowLevelApi {
       },
       message: {
         attachment: {
-          type: "image",
+          type: 'image',
           payload: {
-            url: SERVER_URL + "/assets/instagram_logo.gif"
+            url: SERVER_URL + '/assets/instagram_logo.gif'
           }
         }
       }
-    };
+    }
 
-    this.callSendAPI(messageData);
+    this.callSendAPI(messageData)
   }
 
   /*
@@ -60,15 +60,15 @@ class LowLevelApi {
       },
       message: {
         attachment: {
-          type: "audio",
+          type: 'audio',
           payload: {
-            url: SERVER_URL + "/assets/sample.mp3"
+            url: SERVER_URL + '/assets/sample.mp3'
           }
         }
       }
-    };
+    }
 
-    this.callSendAPI(messageData);
+    this.callSendAPI(messageData)
   }
 
   /*
@@ -82,15 +82,15 @@ class LowLevelApi {
       },
       message: {
         attachment: {
-          type: "video",
+          type: 'video',
           payload: {
-            url: SERVER_URL + "/assets/allofus480.mov"
+            url: SERVER_URL + '/assets/allofus480.mov'
           }
         }
       }
-    };
+    }
 
-    this.callSendAPI(messageData);
+    this.callSendAPI(messageData)
   }
 
   /*
@@ -104,15 +104,15 @@ class LowLevelApi {
       },
       message: {
         attachment: {
-          type: "file",
+          type: 'file',
           payload: {
-            url: SERVER_URL + "/assets/test.txt"
+            url: SERVER_URL + '/assets/test.txt'
           }
         }
       }
-    };
+    }
 
-    this.callSendAPI(messageData);
+    this.callSendAPI(messageData)
   }
 
   /*
@@ -126,10 +126,9 @@ class LowLevelApi {
       },
       message: {
         text: messageText,
-        metadata: "DEVELOPER_DEFINED_METADATA"
+        metadata: 'DEVELOPER_DEFINED_METADATA'
       }
-    };
-
+    }
 
     // const sleep = ms => new Promise(r => setTimeout(r, ms));
     // const ms = 1500 + messageText.length * 3;
@@ -138,7 +137,7 @@ class LowLevelApi {
     // await sleep(ms);
     // await this.sendTypingOff(recipientId);
 
-    return this.callSendAPI(messageData);
+    return this.callSendAPI(messageData)
   }
 
   /*
@@ -152,31 +151,33 @@ class LowLevelApi {
       },
       message: {
         attachment: {
-          type: "template",
+          type: 'template',
           payload: {
-            template_type: "button",
-            text: "This is test text",
+            template_type: 'button',
+            text: 'This is test text',
             buttons: [
               {
-                type: "web_url",
-                url: "https://www.oculus.com/en-us/rift/",
-                title: "Open Web URL"
-              }, {
-                type: "postback",
-                title: "Trigger Postback",
-                payload: "DEVELOPER_DEFINED_PAYLOAD"
-              }, {
-                type: "phone_number",
-                title: "Call Phone Number",
-                payload: "+16505551234"
+                type: 'web_url',
+                url: 'https://www.oculus.com/en-us/rift/',
+                title: 'Open Web URL'
+              },
+              {
+                type: 'postback',
+                title: 'Trigger Postback',
+                payload: 'DEVELOPER_DEFINED_PAYLOAD'
+              },
+              {
+                type: 'phone_number',
+                title: 'Call Phone Number',
+                payload: '+16505551234'
               }
             ]
           }
         }
       }
-    };
+    }
 
-    this.callSendAPI(messageData);
+    this.callSendAPI(messageData)
   }
 
   /*
@@ -190,40 +191,43 @@ class LowLevelApi {
       },
       message: {
         attachment: {
-          type: "template",
+          type: 'template',
           payload: {
-            template_type: "generic",
+            template_type: 'generic',
             elements: [
               {
-                title: "rift",
-                subtitle: "Next-generation virtual reality",
-                item_url: "https://www.oculus.com/en-us/rift/",
-                image_url: SERVER_URL + "/assets/rift.png",
+                title: 'rift',
+                subtitle: 'Next-generation virtual reality',
+                item_url: 'https://www.oculus.com/en-us/rift/',
+                image_url: SERVER_URL + '/assets/rift.png',
                 buttons: [
                   {
-                    type: "web_url",
-                    url: "https://www.oculus.com/en-us/rift/",
-                    title: "Open Web URL"
-                  }, {
-                    type: "postback",
-                    title: "Call Postback",
-                    payload: "Payload for first bubble"
+                    type: 'web_url',
+                    url: 'https://www.oculus.com/en-us/rift/',
+                    title: 'Open Web URL'
+                  },
+                  {
+                    type: 'postback',
+                    title: 'Call Postback',
+                    payload: 'Payload for first bubble'
                   }
                 ]
-              }, {
-                title: "touch",
-                subtitle: "Your Hands, Now in VR",
-                item_url: "https://www.oculus.com/en-us/touch/",
-                image_url: SERVER_URL + "/assets/touch.png",
+              },
+              {
+                title: 'touch',
+                subtitle: 'Your Hands, Now in VR',
+                item_url: 'https://www.oculus.com/en-us/touch/',
+                image_url: SERVER_URL + '/assets/touch.png',
                 buttons: [
                   {
-                    type: "web_url",
-                    url: "https://www.oculus.com/en-us/touch/",
-                    title: "Open Web URL"
-                  }, {
-                    type: "postback",
-                    title: "Call Postback",
-                    payload: "Payload for second bubble"
+                    type: 'web_url',
+                    url: 'https://www.oculus.com/en-us/touch/',
+                    title: 'Open Web URL'
+                  },
+                  {
+                    type: 'postback',
+                    title: 'Call Postback',
+                    payload: 'Payload for second bubble'
                   }
                 ]
               }
@@ -231,9 +235,9 @@ class LowLevelApi {
           }
         }
       }
-    };
+    }
 
-    this.callSendAPI(messageData);
+    this.callSendAPI(messageData)
   }
 
   /*
@@ -242,7 +246,7 @@ class LowLevelApi {
  */
   sendReceiptMessage(recipientId) {
     // Generate a random receipt ID as the API requires a unique ID
-    var receiptId = "order" + Math.floor(Math.random() * 1000);
+    var receiptId = 'order' + Math.floor(Math.random() * 1000)
 
     var messageData = {
       recipient: {
@@ -250,60 +254,62 @@ class LowLevelApi {
       },
       message: {
         attachment: {
-          type: "template",
+          type: 'template',
           payload: {
-            template_type: "receipt",
-            recipient_name: "Peter Chang",
+            template_type: 'receipt',
+            recipient_name: 'Peter Chang',
             order_number: receiptId,
-            currency: "USD",
-            payment_method: "Visa 1234",
-            timestamp: "1428444852",
+            currency: 'USD',
+            payment_method: 'Visa 1234',
+            timestamp: '1428444852',
             elements: [
               {
-                title: "Oculus Rift",
-                subtitle: "Includes: headset, sensor, remote",
+                title: 'Oculus Rift',
+                subtitle: 'Includes: headset, sensor, remote',
                 quantity: 1,
-                price: 599.00,
-                currency: "USD",
-                image_url: SERVER_URL + "/assets/riftsq.png"
-              }, {
-                title: "Samsung Gear VR",
-                subtitle: "Frost White",
+                price: 599.0,
+                currency: 'USD',
+                image_url: SERVER_URL + '/assets/riftsq.png'
+              },
+              {
+                title: 'Samsung Gear VR',
+                subtitle: 'Frost White',
                 quantity: 1,
                 price: 99.99,
-                currency: "USD",
-                image_url: SERVER_URL + "/assets/gearvrsq.png"
+                currency: 'USD',
+                image_url: SERVER_URL + '/assets/gearvrsq.png'
               }
             ],
             address: {
-              street_1: "1 Hacker Way",
-              street_2: "",
-              city: "Menlo Park",
-              postal_code: "94025",
-              state: "CA",
-              country: "US"
+              street_1: '1 Hacker Way',
+              street_2: '',
+              city: 'Menlo Park',
+              postal_code: '94025',
+              state: 'CA',
+              country: 'US'
             },
             summary: {
               subtotal: 698.99,
-              shipping_cost: 20.00,
+              shipping_cost: 20.0,
               total_tax: 57.67,
               total_cost: 626.66
             },
             adjustments: [
               {
-                name: "New Customer Discount",
+                name: 'New Customer Discount',
                 amount: -50
-              }, {
-                name: "$100 Off Coupon",
+              },
+              {
+                name: '$100 Off Coupon',
                 amount: -100
               }
             ]
           }
         }
       }
-    };
+    }
 
-    this.callSendAPI(messageData);
+    this.callSendAPI(messageData)
   }
 
   /*
@@ -334,9 +340,9 @@ class LowLevelApi {
         //   }
         // ]
       }
-    };
+    }
 
-    this.callSendAPI(messageData);
+    this.callSendAPI(messageData)
   }
 
   /*
@@ -344,16 +350,16 @@ class LowLevelApi {
  *
  */
   sendReadReceipt(recipientId) {
-    console.log("Sending a read receipt to mark message as seen");
+    console.log('Sending a read receipt to mark message as seen')
 
     var messageData = {
       recipient: {
         id: recipientId
       },
-      sender_action: "mark_seen"
-    };
+      sender_action: 'mark_seen'
+    }
 
-    this.callSendAPI(messageData);
+    this.callSendAPI(messageData)
   }
 
   /*
@@ -361,16 +367,16 @@ class LowLevelApi {
  *
  */
   sendTypingOn(recipientId) {
-    console.log("Turning typing indicator on");
+    console.log('Turning typing indicator on')
 
     var messageData = {
       recipient: {
         id: recipientId
       },
-      sender_action: "typing_on"
-    };
+      sender_action: 'typing_on'
+    }
 
-    this.callSendAPI(messageData);
+    this.callSendAPI(messageData)
   }
 
   /*
@@ -378,16 +384,16 @@ class LowLevelApi {
  *
  */
   sendTypingOff(recipientId) {
-    console.log("Turning typing indicator off");
+    console.log('Turning typing indicator off')
 
     var messageData = {
       recipient: {
         id: recipientId
       },
-      sender_action: "typing_off"
-    };
+      sender_action: 'typing_off'
+    }
 
-    this.callSendAPI(messageData);
+    this.callSendAPI(messageData)
   }
 
   /*
@@ -401,22 +407,22 @@ class LowLevelApi {
       },
       message: {
         attachment: {
-          type: "template",
+          type: 'template',
           payload: {
-            template_type: "button",
-            text: "Welcome. Link your account.",
+            template_type: 'button',
+            text: 'Welcome. Link your account.',
             buttons: [
               {
-                type: "account_link",
-                url: SERVER_URL + "/authorize"
+                type: 'account_link',
+                url: SERVER_URL + '/authorize'
               }
             ]
           }
         }
       }
-    };
+    }
 
-    this.callSendAPI(messageData);
+    this.callSendAPI(messageData)
   }
 
   findName(id) {
@@ -426,7 +432,9 @@ class LowLevelApi {
         access_token: this.pageAccessToken
       },
       method: 'GET'
-    }).then(body => JSON.parse(body).first_name).catch(err => console.log(err))
+    })
+      .then(body => JSON.parse(body).first_name)
+      .catch(err => console.log(err))
   }
 
   /*
@@ -435,29 +443,38 @@ class LowLevelApi {
  *
  */
   callSendAPI(messageData) {
-    return request({
-      uri: 'https://graph.facebook.com/v2.6/me/messages',
-      qs: {
-        access_token: this.pageAccessToken
+    return request(
+      {
+        uri: 'https://graph.facebook.com/v2.6/me/messages',
+        qs: {
+          access_token: this.pageAccessToken
+        },
+        method: 'POST',
+        json: messageData
       },
-      method: 'POST',
-      json: messageData
+      function(error, response, body) {
+        if (!error && response.statusCode == 200) {
+          var recipientId = body.recipient_id
+          var messageId = body.message_id
 
-    }, function (error, response, body) {
-      if (!error && response.statusCode == 200) {
-        var recipientId = body.recipient_id;
-        var messageId = body.message_id;
-
-        if (messageId) {
-          console.log("Successfully sent message with id %s to recipient %s", messageId, recipientId);
+          if (messageId) {
+            console.log(
+              'Successfully sent message with id %s to recipient %s',
+              messageId,
+              recipientId
+            )
+          } else {
+            console.log(
+              'Successfully called Send API for recipient %s',
+              recipientId
+            )
+          }
         } else {
-          console.log("Successfully called Send API for recipient %s", recipientId);
+          console.error('Failed calling Send API', error, response, body)
         }
-      } else {
-        console.error("Failed calling Send API", error, response, body);
       }
-    });
+    )
   }
 }
 
-module.exports = LowLevelApi;
+module.exports = LowLevelApi
