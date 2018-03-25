@@ -1,10 +1,10 @@
 var Player = require('./player')
-var Storage = require('node-storage')
+const store = require('../db/store')
 
 class PlayersManager {
   constructor(api) {
-    this.nicknames = new Storage('./nicknames')
-    this.invites = new Storage('./invites')
+    this.nicknames = store.nicknames
+    this.invites = store.invites
     this._initInvites()
     this.api = api
     this.players = []

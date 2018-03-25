@@ -1,5 +1,5 @@
 const { partition } = require('lodash')
-var Storage = require('node-storage')
+const store = require('../db/store')
 
 // an-zb: 3
 // zb-an: 5
@@ -12,12 +12,14 @@ const subkey = players =>
 
 const isRed = str => str.toLowerCase().indexOf('red') > -1
 
-const scores = new Storage('./scores')
+const scores = store.scores
 
 const log = async ({ room }) => {
-  if (!room || !room.game.winner) {
+  if (!room || !room.game.winner || room.game.scoreRecorded) {
     return
   }
+
+  room.game.scoreRecorded = true
 
   const [red, blue] = partition(room.players, p => isRed(p.position))
 

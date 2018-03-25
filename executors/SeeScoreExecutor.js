@@ -1,5 +1,5 @@
 const { partition } = require('lodash')
-var Storage = require('node-storage')
+const store = require('../db/store')
 
 const validatePlayerHasTeam = require('../validators/playerHasTeam')
 const validateRoomExists = require('../validators/roomExists')
@@ -18,7 +18,7 @@ const isRed = str => {
 class SeeScoreExecutor {
   constructor(container) {
     container['score'] = this
-    this.scores = new Storage('./scores')
+    this.scores = store.scores
   }
 
   async execute({ api, player, room }) {

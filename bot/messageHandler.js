@@ -83,7 +83,6 @@ class MessageHandler {
         room,
         roomsManager
       }
-      console.log(context)
 
       await executor.execute(context)
       await log(context)
