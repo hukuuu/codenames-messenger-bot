@@ -33,7 +33,11 @@ class FacebookApi {
   }
 
   broadcastExcept(players, ex, f, args) {
-    return this.broadcast(players.filter(p => p.id !== ex.id), f, args)
+    return this.broadcast(
+      players.filter(p => p.id !== ex.id),
+      f,
+      args
+    )
   }
 
   broadcastBoard(players, game) {
@@ -44,6 +48,10 @@ class FacebookApi {
           : this.showBoardGuessMessage(p.id, game)
       })
     )
+  }
+
+  chooseWordsMessage(playerId) {
+    return this.api.sendTextMessage(playerId, t.CHOOSE_WORDS())
   }
 
   youNowCanBeInvitedMessage(playerId, can) {
@@ -142,8 +150,8 @@ class FacebookApi {
     return this.api.sendTextMessage(playerId, t.ROOM_DOES_NOT_EXIST(roomID))
   }
 
-  async welcomeToRoomMessage(playerId, room) {
-    return await this.api.sendTextMessage(playerId, t.ROOM_INFO(room))
+  welcomeToRoomMessage(playerId, room) {
+    return this.api.sendTextMessage(playerId, t.ROOM_INFO(room))
   }
 
   youAreNotInARoomMessage(playerId) {

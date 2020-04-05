@@ -3,14 +3,19 @@ var Game = require('./game')
 var gp = require('./gamePositions')
 
 class Room {
-  constructor(id) {
+  constructor(id, config) {
     this.id = id
-    this.game = new Game(generate())
+    this.config = config
+    this.game = new Game(this.generateCards())
     this.players = []
   }
 
+  generateCards() {
+    return generate(Object.keys(this.config))
+  }
+
   newGame() {
-    this.game = new Game(generate())
+    this.game = new Game(this.generateCards())
     this.players.forEach(p => {
       p.position = p.isHinter()
         ? p.position.replace('TELL', 'GUESS')

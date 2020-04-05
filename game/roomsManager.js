@@ -11,8 +11,8 @@ class RoomsManager {
     this.rooms = []
   }
 
-  createRoom() {
-    var room = new Room(this.id++)
+  createRoom(config) {
+    var room = new Room(this.id++, config)
     this.rooms.push(room)
     return room
   }

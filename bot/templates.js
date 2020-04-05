@@ -16,6 +16,8 @@ const positions = {
 }
 
 module.exports = {
+  CHOOSE_WORDS: () => `Choose words:\n1: classic\n2: duet\n3: undercover `,
+
   ROOM_CREATED: roomID => `Room "${roomID}" created.`,
 
   LIST_ROOMS: roomIds => {

@@ -1,5 +1,5 @@
 const shuffle = require('mout/array/shuffle')
-const words = require('./words.json').words
+const words = require('./words.json')
 
 const makeTypes = () =>
   Array(8)
@@ -9,8 +9,14 @@ const makeTypes = () =>
     .concat(Math.random() >= 0.5 ? 'red' : 'blue')
     .concat('assassin')
 
-const generate = () => {
-  const shuffled = shuffle(words)
+const generate = config => {
+  let allWords = []
+  for (key of config) {
+    allWords = allWords.concat(words[key])
+  }
+  const unique = Array.from(new Set(allWords))
+  console.log(`generating ${unique.length}`)
+  const shuffled = shuffle(unique)
 
   let i = 0
   const cards = makeTypes().map(type => ({
